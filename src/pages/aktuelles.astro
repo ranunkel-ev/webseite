@@ -1,8 +1,8 @@
 ---
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
-import '../styles/global.css';
-import { docToHtml } from '../utils/docRenderer';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RichText from '../components/RichText';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const page = await reader.singletons.aktuelles.read();
@@ -13,108 +13,42 @@ const rawItems = page?.items ?? [];
 const items = await Promise.all(
   rawItems.map(async (item) => {
     const bodyNodes = item.body ? await item.body() : [];
-    return { ...item, bodyHtml: docToHtml(bodyNodes) };
+    return { ...item, bodyNodes };
   })
 );
 ---
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aktuelles — Ranunkel e.V.</title>
-  <meta name="description" content="Neuigkeiten, Hinweise und Termine aus dem Waldkindergarten und den Spielgruppen." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-</head>
-<body>
-
-<!-- NAV -->
-<nav class="sitenav">
-  <a class="nav-logo" href="/" aria-label="Ranunkel e.V.">
-    <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
-      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f"/>
-      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(72, 18, 18)"/>
-      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(144, 18, 18)"/>
-      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(216, 18, 18)"/>
-      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(288, 18, 18)"/>
-      <circle cx="18" cy="18" r="5.5" fill="#b8834a"/>
-    </svg>
-    <div>
-      <div class="nav-logo-text-primary">Ranunkel e.V.</div>
-      <div class="nav-logo-text-sub">Waldkindergarten Waldkirch</div>
+<BaseLayout
+  title="Aktuelles — Ranunkel e.V."
+  description="Neuigkeiten, Hinweise und Termine aus dem Waldkindergarten und den Spielgruppen."
+  activePage="/aktuelles"
+>
+  <div class="page-content">
+    <div class="content-header">
+      <div class="content-header-eyebrow">{hero?.eyebrow || 'Aktuelles'}</div>
+      <div class="content-header-accent"></div>
+      <h1>{hero?.title || 'Aktuelles'}</h1>
+      {hero?.description && <p class="content-header-desc">{hero.description}</p>}
     </div>
-  </a>
-  <div class="nav-links" id="navlinks">
-    <a href="/traegerverein">Trägerverein</a>
-    <a href="/kindergarten">Kindergarten</a>
-    <a href="/spielgruppe">Spielgruppe</a>
-    <a href="/aktuelles" class="nav-active">Aktuelles</a>
-    <a href="/faq">FAQ</a>
-    <a href="/anmeldung" class="nav-cta">Anmeldung</a>
-  </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menü öffnen">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
 
-<!-- PAGE CONTENT -->
-<div class="page-content">
-
-  <!-- Page header -->
-  <div class="content-header">
-    <div class="content-header-eyebrow">{hero?.eyebrow || 'Aktuelles'}</div>
-    <div class="content-header-accent"></div>
-    <h1>{hero?.title || 'Aktuelles'}</h1>
-    {hero?.description && <p class="content-header-desc">{hero.description}</p>}
-  </div>
-
-  <!-- Article feed -->
-  <div>
-    {items.map((item) => (
-      <article class={`article${item.image ? ' article--has-image' : ''}`}>
-        {item.image && (
-          <img class="article-img" src={item.image} alt={item.title} />
-        )}
-        <div class="article-body">
-          <div class="article-meta">
-            {item.highlight && (
-              <span class="article-tag article-tag--highlight">Highlight</span>
-            )}
-            {item.date && <span class="article-date">{item.date}</span>}
+    <div>
+      {items.map((item) => (
+        <article class={`article${item.image ? ' article--has-image' : ''}`}>
+          {item.image && (
+            <img class="article-img" src={item.image} alt={item.title} />
+          )}
+          <div class="article-body">
+            <div class="article-meta">
+              {item.highlight && (
+                <span class="article-tag article-tag--highlight">Highlight</span>
+              )}
+              {item.date && <span class="article-date">{item.date}</span>}
+            </div>
+            <h2>{item.title}</h2>
+            <RichText document={item.bodyNodes} />
           </div>
-          <h2>{item.title}</h2>
-          {item.bodyHtml && <Fragment set:html={item.bodyHtml} />}
-        </div>
-      </article>
-    ))}
+        </article>
+      ))}
+    </div>
   </div>
-
-</div>
-
-<!-- FOOTER -->
-<footer class="sitefooter">
-  <div class="footer-copy">© 2026 Ranunkel e.V. · Rappeneckstraße 29, 79183 Waldkirch</div>
-  <div class="footer-links">
-    <a href="/impressum">Impressum</a>
-    <a href="/datenschutz">Datenschutz</a>
-    <a href="/kontakt">Kontakt</a>
-  </div>
-</footer>
-
-<script>
-(function () {
-  const btn = document.getElementById('hamburger');
-  const nav = document.getElementById('navlinks');
-  if (btn && nav) {
-    btn.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-  }
-})();
-</script>
-
-</body>
-</html>
+</BaseLayout>

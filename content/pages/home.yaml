@@ -8,10 +8,25 @@ hero:
     Waldkindergarten und Waldspielgruppen für Kinder von 2 bis 6 Jahren — im
     Wald und in den Weinbergen rund um Batzenhäusle.
   image: /images/hero/image.jpeg
-aktuelles:
-  tag: Aktuelles
-  items:
-    - title: Waldfest 2026
-      body: >-
-        Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer
-        Aktuelles-Seite.
+quote:
+  text: >-
+    Bewusst, sorgsam und respektvoll gehen wir mit allem Lebendigen um — mit
+    uns, den Pflanzen und den Tieren.
+  sub: >-
+    Unser Verein begleitet Familien seit 1997 in Waldkirch/Buchholz.
+    Rappeneckstraße 29, Ortsteil Batzenhäusle.
+features:
+  - eyebrow: 3 bis 6 Jahre
+    title: Waldkindergarten
+    description: >-
+      Im Ortsteil Batzenhäusle, zwischen Wald und Weinbergen. Das Kind als
+      eigenständige Persönlichkeit — das ist unser Grundgedanke.
+    href: /kindergarten
+    icon: kg
+  - eyebrow: Unter 3 Jahre
+    title: Waldspielgruppen
+    description: >-
+      Zwei betreute Gruppen am gleichen Standort. Schon die Kleinsten genießen
+      die Frei- und Gestaltungsräume im Wald.
+    href: /spielgruppe
+    icon: sg

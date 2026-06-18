@@ -862,6 +862,85 @@ body {
   font-weight: 600;
 }
 
+/* ── PROSE (FAQ) ─────────────────────────────── */
+.prose h2 {
+  font-family: var(--f-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--c-green-md);
+  margin: 48px 0 16px;
+  letter-spacing: 0.01em;
+}
+.prose h2:first-child { margin-top: 0; }
+.prose h3 {
+  font-family: var(--f-serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--c-text);
+  margin: 28px 0 8px;
+}
+.prose p {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--c-text-lt);
+  line-height: 1.85;
+  margin: 0 0 16px;
+}
+.prose ul {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--c-text-lt);
+  line-height: 2;
+  margin: 0 0 16px;
+  padding-left: 20px;
+  list-style: disc;
+}
+.prose a {
+  color: var(--c-green);
+  font-weight: 600;
+}
+.prose a:hover { opacity: 0.75; }
+.prose hr {
+  border: none;
+  height: 1px;
+  background: var(--c-border);
+  margin: 40px 0;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px 0 20px;
+}
+.prose thead { display: none; }
+.prose tbody tr {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.prose tbody tr:last-child { border-bottom: none; }
+.prose td {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--c-text-lt);
+}
+.prose td:first-child {
+  font-weight: 600;
+  color: var(--c-green);
+}
+
+/* ── CALLOUT / HINWEIS ───────────────────────── */
+.callout {
+  border-left: 4px solid var(--c-clay, #b8834a);
+  background: #f7f3ec;
+  padding: 14px 18px;
+  border-radius: 6px;
+  margin: 24px 0;
+  color: #4a4a40;
+}
+
 /* ── CTA BAR ─────────────────────────────────── */
 .cta-bar {
   background: var(--c-green);

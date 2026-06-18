@@ -1,0 +1,16 @@
+---
+interface Props {
+  copy?: string;
+}
+
+const { copy = '© 2026 Ranunkel e.V. · Rappeneckstraße 29, 79183 Waldkirch' } = Astro.props;
+---
+
+<footer class="sitefooter">
+  <div class="footer-copy">{copy}</div>
+  <div class="footer-links">
+    <a href="/impressum">Impressum</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/kontakt">Kontakt</a>
+  </div>
+</footer>

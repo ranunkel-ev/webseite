@@ -20,31 +20,3 @@ infoBox:
     value: |-
       Melanie Geduhn · Mirko Lovric
       Julia Schuler · Petra Zink
-approach:
-  heading: Unser Ansatz
-  paragraphs:
-    - >-
-      Im Waldkircher Ortsteil Batzenhäusle, zwischen Wald und Weinbergen, liegt
-      unser Waldkindergarten für 3- bis 6-jährige Kinder. Unser Grundgedanke
-      ist, das Kind als eigenständige Persönlichkeit zu sehen und dessen
-      Entwicklung zu unterstützen.
-    - >-
-      Unser Alltag findet im Wald, in den nahegelegenen Weinbergen und an den
-      Bauwägen statt — und das bei jedem Wetter.
-schedule:
-  heading: Tagesablauf
-fees:
-  heading: Monatliche Beiträge
-  note: Ab 1. September 2025 · erhoben für 11 Monate pro Kindergartenjahr
-  items:
-    - label: 1-Kind-Familie
-      amount: 218 €
-    - label: 2-Kind-Familie
-      amount: 168 €
-    - label: 3+ Kinder-Familie
-      amount: 114 €
-  footnote: Kinderzahl = alle Kinder unter 18 Jahren, für die Kindergeld bezogen wird.
-cta:
-  text: Möchten Sie Ihr Kind anmelden?
-  primaryLabel: Jetzt vormerken
-  secondaryLabel: Kontakt

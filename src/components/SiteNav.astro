@@ -1,0 +1,49 @@
+---
+interface Props {
+  activePage?: string;
+  brandPrimary?: string;
+  brandSub?: string;
+}
+
+const {
+  activePage = '',
+  brandPrimary = 'Ranunkel e.V.',
+  brandSub = 'Waldkindergarten Waldkirch',
+} = Astro.props;
+
+const links = [
+  { href: '/traegerverein', label: 'Trägerverein' },
+  { href: '/kindergarten', label: 'Kindergarten' },
+  { href: '/spielgruppe', label: 'Spielgruppe' },
+  { href: '/aktuelles', label: 'Aktuelles' },
+  { href: '/faq', label: 'FAQ' },
+];
+---
+
+<nav class="sitenav">
+  <a class="nav-logo" href="/" aria-label={brandPrimary}>
+    <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(72, 18, 18)"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(144, 18, 18)"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(216, 18, 18)"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(288, 18, 18)"/>
+      <circle cx="18" cy="18" r="5.5" fill="#b8834a"/>
+    </svg>
+    <div>
+      <div class="nav-logo-text-primary">{brandPrimary}</div>
+      <div class="nav-logo-text-sub">{brandSub}</div>
+    </div>
+  </a>
+  <div class="nav-links" id="navlinks">
+    {links.map((link) => (
+      <a href={link.href} class={activePage === link.href ? 'nav-active' : undefined}>
+        {link.label}
+      </a>
+    ))}
+    <a href="/anmeldung" class="nav-cta">Anmeldung</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>

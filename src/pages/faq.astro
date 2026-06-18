@@ -5,27 +5,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RichText from '../components/RichText';
 
 const reader = createReader(process.cwd(), keystaticConfig);
-const page = await reader.singletons.traegerverein.read();
+const page = await reader.singletons.faq.read();
 
 const hero = page?.hero;
 const bodyNodes = page?.body ? await page.body() : [];
+const cta = page?.cta;
 ---
 
 <BaseLayout
-  title="Der Trägerverein — Ranunkel e.V."
-  description="Der gemeinnützige Elternverein Ranunkel e.V. trägt seit 1997 den Waldkindergarten und die Waldspielgruppen in Waldkirch."
-  activePage="/traegerverein"
+  title="FAQ — Ranunkel e.V."
+  description="Häufige Fragen rund um Kindergarten und Spielgruppen bei Ranunkel e.V. in Waldkirch."
+  activePage="/faq"
 >
   <div class="page-content">
     <div class="content-header">
-      <div class="content-header-eyebrow">{hero?.eyebrow || 'Trägerverein'}</div>
+      <div class="content-header-eyebrow">{hero?.eyebrow || 'Häufige Fragen'}</div>
       <div class="content-header-accent"></div>
-      <h1>{hero?.title || 'Der Trägerverein'}</h1>
+      <h1>{hero?.title || 'FAQ'}</h1>
       {hero?.description && <p class="content-header-desc">{hero.description}</p>}
     </div>
 
     <div class="prose">
       <RichText document={bodyNodes} />
     </div>
+
+    {cta && (
+      <div class="cta-bar" style="margin-top: 64px;">
+        <p>{cta.text}</p>
+        <div class="cta-bar-actions">
+          <a href="/kontakt" class="cta-bar-primary">{cta.buttonText}</a>
+        </div>
+      </div>
+    )}
   </div>
 </BaseLayout>

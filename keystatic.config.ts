@@ -1,11 +1,51 @@
 import { config, fields, singleton } from "@keystatic/core";
+import { componentBlocks } from "./src/keystatic/componentBlocks";
+
+/** Gemeinsame Formatierungs-Optionen für die Seiten-Body-Felder (Hybrid-Modell). */
+const bodyDocument = (label: string) =>
+  fields.document({
+    label,
+    formatting: {
+      headingLevels: { levels: [2, 3] },
+      inlineMarks: { bold: true, italic: true },
+      listTypes: { ordered: true, unordered: true },
+    },
+    dividers: true,
+    tables: true,
+    links: true,
+    componentBlocks,
+  });
 
 export default config({
-  storage: { kind: "local" },
+  // Lokal ohne GitHub-Login arbeiten; nur im Production-Build via GitHub speichern.
+  storage:
+    import.meta.env?.DEV ?? process.env.NODE_ENV !== "production"
+      ? { kind: "local" }
+      : { kind: "github", repo: "mhaertwig/ranunkel" },
   ui: {
     brand: { name: "Ranunkel e.V." },
   },
   singletons: {
+    site: singleton({
+      label: "Website (global)",
+      path: "content/site",
+      schema: {
+        nav: fields.object(
+          {
+            brandPrimary: fields.text({ label: "Marke" }),
+            brandSub: fields.text({ label: "Untertitel" }),
+          },
+          { label: "Navigation" },
+        ),
+        footer: fields.object(
+          {
+            copy: fields.text({ label: "Copyright-/Adresszeile" }),
+          },
+          { label: "Footer" },
+        ),
+      },
+    }),
+
     traegerverein: singleton({
       label: "Trägerverein",
       path: "content/pages/traegerverein",
@@ -21,84 +61,7 @@ export default config({
           },
           { label: "Header" },
         ),
-        founding: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            content: fields.document({
-              label: "Inhalt",
-              formatting: {
-                inlineMarks: { bold: true, italic: true },
-                listTypes: { ordered: true, unordered: true },
-              },
-              links: true,
-            }),
-          },
-          { label: "Entstehung" },
-        ),
-        milestones: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            items: fields.array(
-              fields.object({
-                year: fields.text({ label: "Jahr" }),
-                title: fields.text({ label: "Titel" }),
-                description: fields.text({
-                  label: "Beschreibung",
-                  multiline: true,
-                }),
-              }),
-              {
-                label: "Meilensteine",
-                itemLabel: (props) =>
-                  props.fields.year.value || "Meilenstein",
-              },
-            ),
-          },
-          { label: "Meilensteine" },
-        ),
-        tasks: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            content: fields.document({
-              label: "Aufgaben (als Liste)",
-              formatting: {
-                inlineMarks: { bold: true, italic: true },
-                listTypes: { ordered: true, unordered: true },
-              },
-              links: true,
-            }),
-          },
-          { label: "Aufgaben" },
-        ),
-        financing: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            content: fields.document({
-              label: "Inhalt (Einleitung + Liste)",
-              formatting: {
-                inlineMarks: { bold: true, italic: true },
-                listTypes: { ordered: true, unordered: true },
-              },
-              links: true,
-            }),
-          },
-          { label: "Finanzierung" },
-        ),
-        membership: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            text: fields.text({ label: "Text", multiline: true }),
-          },
-          { label: "Mitgliedschaft" },
-        ),
-        cta: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            description: fields.text({ label: "Text", multiline: true }),
-            buttonText: fields.text({ label: "Button-Text" }),
-          },
-          { label: "Mitglied werden (CTA)" },
-        ),
+        body: bodyDocument("Seiteninhalt"),
       },
     }),
 
@@ -124,59 +87,7 @@ export default config({
             itemLabel: (props) => props.fields.label.value || "Info",
           },
         ),
-        approach: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            paragraphs: fields.array(
-              fields.text({ label: "Absatz", multiline: true }),
-              {
-                label: "Absätze",
-                itemLabel: (props) => props.value?.slice(0, 50) || "Absatz",
-              },
-            ),
-          },
-          { label: "Unser Ansatz" },
-        ),
-        schedule: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            body: fields.document({
-              label: "Inhalt (Tabelle)",
-              formatting: {
-                inlineMarks: { bold: true, italic: true },
-              },
-              tables: true,
-            }),
-          },
-          { label: "Tagesablauf" },
-        ),
-        fees: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            note: fields.text({ label: "Hinweis-Zeile" }),
-            items: fields.array(
-              fields.object({
-                label: fields.text({ label: "Familientyp" }),
-                amount: fields.text({ label: "Betrag (z.B. 218 €)" }),
-              }),
-              {
-                label: "Beiträge",
-                itemLabel: (props) =>
-                  props.fields.label.value || "Beitrag",
-              },
-            ),
-            footnote: fields.text({ label: "Fußnote", multiline: true }),
-          },
-          { label: "Monatliche Beiträge" },
-        ),
-        cta: fields.object(
-          {
-            text: fields.text({ label: "Text", multiline: true }),
-            primaryLabel: fields.text({ label: "Primär-Button" }),
-            secondaryLabel: fields.text({ label: "Sekundär-Button" }),
-          },
-          { label: "CTA" },
-        ),
+        body: bodyDocument("Seiteninhalt"),
       },
     }),
 
@@ -202,42 +113,7 @@ export default config({
             itemLabel: (props) => props.fields.label.value || "Info",
           },
         ),
-        content: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            body: fields.document({
-              label: "Inhalt",
-              formatting: {
-                inlineMarks: { bold: true, italic: true },
-                listTypes: { ordered: true, unordered: true },
-              },
-              links: true,
-            }),
-          },
-          { label: "Einleitung" },
-        ),
-        activities: fields.object(
-          {
-            heading: fields.text({ label: "Überschrift" }),
-            body: fields.document({
-              label: "Inhalt",
-              formatting: {
-                inlineMarks: { bold: true, italic: true },
-                listTypes: { ordered: true, unordered: true },
-              },
-              links: true,
-            }),
-          },
-          { label: "Aktivitäten" },
-        ),
-        cta: fields.object(
-          {
-            text: fields.text({ label: "Text", multiline: true }),
-            primaryLabel: fields.text({ label: "Primär-Button" }),
-            secondaryLabel: fields.text({ label: "Sekundär-Button" }),
-          },
-          { label: "CTA" },
-        ),
+        body: bodyDocument("Seiteninhalt"),
       },
     }),
 
@@ -302,40 +178,19 @@ export default config({
           },
           { label: "Header" },
         ),
-        categories: fields.array(
-          fields.object({
-            name: fields.text({ label: "Kategorie-Name" }),
-            questions: fields.array(
-              fields.object({
-                question: fields.text({ label: "Frage" }),
-                answer: fields.document({
-                  label: "Antwort",
-                  formatting: {
-                    inlineMarks: {
-                      bold: true,
-                      italic: true,
-                    },
-                    listTypes: {
-                      ordered: true,
-                      unordered: true,
-                    },
-                  },
-                  dividers: true,
-                  links: true,
-                }),
-              }),
-              {
-                label: "Fragen",
-                itemLabel: (props) =>
-                  props.fields.question.value || "Frage",
-              },
-            ),
-          }),
-          {
-            label: "Kategorien",
-            itemLabel: (props) => props.fields.name.value || "Kategorie",
+        body: fields.document({
+          label: "FAQ-Inhalt",
+          formatting: {
+            headingLevels: {
+              levels: [2, 3],
+            },
+            inlineMarks: { bold: true, italic: true },
+            listTypes: { ordered: true, unordered: true },
           },
-        ),
+          dividers: true,
+          tables: true,
+          links: true,
+        }),
         cta: fields.object(
           {
             text: fields.text({ label: "Text", multiline: true }),
@@ -371,22 +226,32 @@ export default config({
           },
           { label: "Header" },
         ),
-        aktuelles: fields.object(
+        quote: fields.object(
           {
-            tag: fields.text({ label: 'Tag-Zeile (z.B. "Aktuelles")' }),
-            items: fields.array(
-              fields.object({
-                title: fields.text({ label: "Titel" }),
-                body: fields.text({ label: "Text", multiline: true }),
-              }),
-              {
-                label: "Beiträge",
-                itemLabel: (props) =>
-                  props.fields.title.value || "Neuer Beitrag",
-              },
-            ),
+            text: fields.text({ label: "Zitat", multiline: true }),
+            sub: fields.text({ label: "Unterzeile", multiline: true }),
           },
-          { label: "Aktuelles" },
+          { label: "Zitat-Abschnitt" },
+        ),
+        features: fields.array(
+          fields.object({
+            eyebrow: fields.text({ label: "Tag-Zeile (z.B. Alter)" }),
+            title: fields.text({ label: "Titel" }),
+            description: fields.text({ label: "Text", multiline: true }),
+            href: fields.text({ label: "Link (z.B. /kindergarten)" }),
+            icon: fields.select({
+              label: "Symbol",
+              options: [
+                { label: "Baum (Kindergarten)", value: "kg" },
+                { label: "Busch (Spielgruppe)", value: "sg" },
+              ],
+              defaultValue: "kg",
+            }),
+          }),
+          {
+            label: "Feature-Karten",
+            itemLabel: (props) => props.fields.title.value || "Karte",
+          },
         ),
       },
     }),

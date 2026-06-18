@@ -1,0 +1,54 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import '../styles/global.css';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  activePage?: string;
+}
+
+const { title, description, activePage } = Astro.props;
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const site = await reader.singletons.site.read();
+---
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<SiteNav
+  activePage={activePage}
+  brandPrimary={site?.nav?.brandPrimary}
+  brandSub={site?.nav?.brandSub}
+/>
+
+<slot />
+
+<SiteFooter copy={site?.footer?.copy} />
+
+<script>
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('navlinks');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+  }
+</script>
+
+</body>
+</html>
