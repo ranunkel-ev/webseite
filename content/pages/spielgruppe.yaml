@@ -1,0 +1,23 @@
+hero:
+  eyebrow: Waldspielgruppen
+  title: Waldspielgruppen
+  quote: Wir fördern eine Entwicklung zu gesunden und fröhlichen Kindern.
+infoBox:
+  - label: Alter
+    value: 2 bis 3 Jahre
+  - label: Gruppen
+    value: Zwei betreute Gruppen
+  - label: Standort
+    value: |-
+      Rappeneckstraße 29
+      79183 Waldkirch
+  - label: Seit
+    value: "2006"
+content:
+  heading: Den Wald von Anfang an erleben
+activities:
+  heading: Was die Kinder im Wald erwartet
+cta:
+  text: Platz in der Spielgruppe sichern?
+  primaryLabel: Jetzt vormerken
+  secondaryLabel: Kontakt

@@ -1,0 +1,40 @@
+hero:
+  eyebrow: Trägerverein
+  title: Der Trägerverein
+  description: >-
+    Ein gemeinnütziger Elternverein, der seit 1997 den Waldkindergarten und die
+    Waldspielgruppen in Waldkirch trägt und gestaltet.
+founding:
+  heading: Von der Idee zum Verein
+milestones:
+  heading: Fast 30 Jahre Waldpädagogik
+  items:
+    - year: '1997'
+      title: Vereinsgründung
+      description: >-
+        Eine Elterngruppe gründet Ranunkel e.V. mit dem Ziel, einen
+        Waldkindergarten in Waldkirch zu etablieren.
+    - year: '1998'
+      title: Kindergartenbetrieb
+      description: >-
+        Der Waldkindergarten nimmt seinen Betrieb auf — Kinder verbringen ihren
+        Alltag im Wald rund um Batzenhäusle.
+    - year: '2006'
+      title: Erweiterung
+      description: >-
+        Zwei Waldspielgruppen für Kinder von 2 bis 3 Jahren kommen hinzu — am
+        gleichen Standort wie der Kindergarten.
+tasks:
+  heading: Was der Verein tut
+financing:
+  heading: Finanzierung
+membership:
+  heading: Mitgliedschaft
+  text: >-
+    Als Elternteil eines Kindes im Kindergarten oder der Spielgruppe werden Sie
+    automatisch Vereinsmitglied. Der Verein lebt vom Engagement seiner
+    Mitglieder — jede helfende Hand ist willkommen.
+cta:
+  heading: Mitglied werden
+  description: Fragen zum Verein oder zur Mitgliedschaft?
+  buttonText: Kontakt aufnehmen

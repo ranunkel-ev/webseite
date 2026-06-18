@@ -1,0 +1,20 @@
+hero:
+  eyebrow: Aktuelles
+  title: Aktuelles
+  description: >-
+    Neuigkeiten, Hinweise und Termine aus dem Waldkindergarten und den
+    Spielgruppen.
+items:
+  - highlight: true
+    date: Juni 2026
+    title: Waldfest 2026
+    image: /images/aktuelles/items/0/image.jpg
+  - highlight: false
+    date: April 2026
+    title: Neue Beiträge ab September 2025
+  - highlight: false
+    date: März 2026
+    title: Frühlingsfest im Wald
+  - highlight: false
+    date: Mai 2026
+    title: Abholberechtigung und Tagesvollmacht

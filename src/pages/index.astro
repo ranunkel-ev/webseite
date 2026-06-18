@@ -1,17 +1,191 @@
 ---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import '../styles/global.css';
+import { docToHtml } from '../utils/docRenderer';
 
+const reader = createReader(process.cwd(), keystaticConfig);
+const [home, aktuellesPage] = await Promise.all([
+  reader.singletons.homepage.read(),
+  reader.singletons.aktuelles.read(),
+]);
+
+const hero = home?.hero;
+const heroTitleLines = (hero?.title ?? 'Draußen sein.\nWachsen.\nEntdecken.').split('\n');
+
+const latestNewsRaw = aktuellesPage?.items.find((item) => item.highlight) ?? aktuellesPage?.items[0];
+const latestNewsBodyNodes = latestNewsRaw?.body ? await latestNewsRaw.body() : [];
+const latestNews = latestNewsRaw
+  ? { ...latestNewsRaw, bodyText: docToHtml(latestNewsBodyNodes).replace(/<[^>]+>/g, '') }
+  : undefined;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranunkel e.V. — Waldkindergarten Waldkirch</title>
+  <meta name="description" content="Waldkindergarten und Waldspielgruppen in Waldkirch/Buchholz. Seit 1997 aktiv." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sitenav">
+  <a class="nav-logo" href="/" aria-label="Ranunkel e.V.">
+    <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(72, 18, 18)"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(144, 18, 18)"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(216, 18, 18)"/>
+      <ellipse cx="18" cy="9" rx="4.5" ry="7" fill="#2d4a2f" transform="rotate(288, 18, 18)"/>
+      <circle cx="18" cy="18" r="5.5" fill="#b8834a"/>
+    </svg>
+    <div>
+      <div class="nav-logo-text-primary">Ranunkel e.V.</div>
+      <div class="nav-logo-text-sub">Waldkindergarten Waldkirch</div>
+    </div>
+  </a>
+  <div class="nav-links" id="navlinks">
+    <a href="/traegerverein">Trägerverein</a>
+    <a href="/kindergarten">Kindergarten</a>
+    <a href="/spielgruppe">Spielgruppe</a>
+    <a href="/aktuelles">Aktuelles</a>
+    <a href="/faq">FAQ</a>
+    <a href="/anmeldung" class="nav-cta">Anmeldung</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">{hero?.eyebrow ?? 'Waldkirch · Seit 1997'}</div>
+    <h1>
+      {heroTitleLines.map((line, i) => (
+        <>
+          {line}
+          {i < heroTitleLines.length - 1 && <br />}
+        </>
+      ))}
+    </h1>
+    <p class="hero-desc">{hero?.description ?? 'Waldkindergarten und Waldspielgruppen für Kinder von 2 bis 6 Jahren — im Wald und in den Weinbergen rund um Batzenhäusle.'}</p>
+    <div class="hero-btns">
+      <a href="/kindergarten" class="btn-primary">Zum Kindergarten</a>
+      <a href="/kontakt" class="btn-outline">Kontakt</a>
+    </div>
+  </div>
+  <div class="hero-img">
+    {hero?.image ? (
+      <img src={hero.image} alt="Ranunkel Waldkindergarten" style="width:100%;height:100%;object-fit:cover;" />
+    ) : (
+      <svg width="100%" height="100%" viewBox="0 0 640 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="skA1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#cfe4b8"/>
+            <stop offset="100%" stop-color="#b4cc98"/>
+          </linearGradient>
+        </defs>
+        <rect width="640" height="600" fill="url(#skA1)"/>
+        <rect y="380" width="640" height="220" fill="#8aa870"/>
+        <polygon points="0,380 50,200 100,380" fill="#4a6e38" opacity="0.5"/>
+        <polygon points="60,380 120,155 180,380" fill="#3a5a2a" opacity="0.8"/>
+        <rect x="108" y="368" width="22" height="72" fill="#4a3018" opacity="0.8"/>
+        <polygon points="200,380 270,90 340,380" fill="#2d4a22" opacity="0.92"/>
+        <rect x="256" y="363" width="26" height="88" fill="#3a2810" opacity="0.9"/>
+        <polygon points="380,380 450,120 520,380" fill="#344e28" opacity="0.88"/>
+        <rect x="436" y="363" width="24" height="88" fill="#3a2810" opacity="0.85"/>
+        <polygon points="530,380 590,200 650,380" fill="#3a5a2a" opacity="0.7"/>
+        <ellipse cx="290" cy="400" rx="60" ry="28" fill="#5a8040" opacity="0.65"/>
+        <ellipse cx="130" cy="410" rx="44" ry="21" fill="#4e7030" opacity="0.65"/>
+        <ellipse cx="540" cy="406" rx="50" ry="24" fill="#5a8040" opacity="0.65"/>
+        <circle cx="530" cy="95" r="65" fill="#f0e870" opacity="0.15"/>
+        <circle cx="530" cy="95" r="40" fill="#f0e870" opacity="0.12"/>
+        <text x="320" y="576" font-size="13" fill="#4a6030" text-anchor="middle" opacity="0.5" font-family="sans-serif">📷 Foto: Waldkinder beim Entdecken</text>
+      </svg>
+    )}
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <blockquote>„Bewusst, sorgsam und respektvoll gehen wir mit allem Lebendigen um — mit uns, den Pflanzen und den Tieren."</blockquote>
+  <div class="quote-divider"></div>
+  <p class="quote-sub">Unser Verein begleitet Familien seit 1997 in Waldkirch/Buchholz. Rappeneckstraße 29, Ortsteil Batzenhäusle.</p>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature-card">
+    <div class="feature-card-img feature-card-img-kg">
+      <svg width="72" height="72" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="32,6 54,50 10,50" fill="#2d4a22" opacity="0.85"/>
+        <polygon points="32,18 50,50 14,50" fill="#3d5a30"/>
+        <rect x="27" y="50" width="10" height="14" fill="#5a3a1a"/>
+        <circle cx="49" cy="16" r="7" fill="#e8d840" opacity="0.45"/>
+      </svg>
+    </div>
+    <div class="feature-card-body">
+      <div class="feature-eyebrow">3 bis 6 Jahre</div>
+      <h2>Waldkindergarten</h2>
+      <p>Im Ortsteil Batzenhäusle, zwischen Wald und Weinbergen. Das Kind als eigenständige Persönlichkeit — das ist unser Grundgedanke.</p>
+      <a href="/kindergarten" class="btn-link">Mehr erfahren →</a>
+    </div>
+  </div>
+  <div class="feature-card">
+    <div class="feature-card-img feature-card-img-sg">
+      <svg width="72" height="72" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="26" r="14" fill="#3d6030" opacity="0.7"/>
+        <circle cx="21" cy="30" r="10" fill="#4a7038" opacity="0.65"/>
+        <circle cx="43" cy="30" r="9" fill="#365028" opacity="0.65"/>
+        <rect x="29" y="42" width="7" height="16" fill="#5a3a1a"/>
+      </svg>
+    </div>
+    <div class="feature-card-body">
+      <div class="feature-eyebrow">Unter 3 Jahre</div>
+      <h2>Waldspielgruppen</h2>
+      <p>Zwei betreute Gruppen am gleichen Standort. Schon die Kleinsten genießen die Frei- und Gestaltungsräume im Wald.</p>
+      <a href="/spielgruppe" class="btn-link">Mehr erfahren →</a>
+    </div>
+  </div>
+</div>
+
+<!-- AKTUELLES BANNER -->
+<div class="aktuelles-banner">
+  <div>
+    <div class="aktuelles-eyebrow">Aktuelles</div>
+    <h2>{latestNews?.title ?? 'Neuigkeiten'}</h2>
+    <p>{latestNews?.bodyText || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</p>
+  </div>
+  <a href="/aktuelles" class="aktuelles-btn">Alle Neuigkeiten</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="sitefooter">
+  <div class="footer-copy">© 2026 Ranunkel e.V. · Rappeneckstraße 29, 79183 Waldkirch</div>
+  <div class="footer-links">
+    <a href="/impressum">Impressum</a>
+    <a href="/datenschutz">Datenschutz</a>
+    <a href="/kontakt">Kontakt</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('hamburger');
+  var nav = document.getElementById('navlinks');
+  if (btn && nav) {
+    btn.addEventListener('click', function () {
+      nav.classList.toggle('open');
+    });
+  }
+})();
+</script>
+
+</body>
 </html>

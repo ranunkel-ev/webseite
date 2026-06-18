@@ -1,0 +1,17 @@
+hero:
+  eyebrow: Waldkirch · Seit 1997
+  title: |-
+    Draußen sein.
+    Wachsen.
+    Entdecken.
+  description: >-
+    Waldkindergarten und Waldspielgruppen für Kinder von 2 bis 6 Jahren — im
+    Wald und in den Weinbergen rund um Batzenhäusle.
+  image: /images/hero/image.jpeg
+aktuelles:
+  tag: Aktuelles
+  items:
+    - title: Waldfest 2026
+      body: >-
+        Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer
+        Aktuelles-Seite.
