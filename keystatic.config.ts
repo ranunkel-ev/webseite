@@ -366,8 +366,13 @@ export default config({
             title: fields.text({ label: "Titel" }),
             description: fields.text({ label: "Text", multiline: true }),
             href: fields.text({ label: "Link (z.B. /kindergarten)" }),
+            image: fields.image({
+              label: "Bild (optional, ersetzt das Symbol)",
+              directory: "public/images/features",
+              publicPath: "/images/features/",
+            }),
             icon: fields.select({
-              label: "Symbol",
+              label: "Symbol (Fallback wenn kein Bild)",
               options: [
                 { label: "Baum (Kindergarten)", value: "kg" },
                 { label: "Busch (Spielgruppe)", value: "sg" },

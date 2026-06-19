@@ -56,6 +56,12 @@ body {
   align-items: center;
   gap: 13px;
 }
+.nav-logo img {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  object-fit: contain;
+}
 .nav-logo-text-primary {
   font-family: var(--f-serif);
   font-size: 17px;

@@ -7,7 +7,7 @@ hero:
   description: >-
     Waldkindergarten und Waldspielgruppen für Kinder von 2 bis 6 Jahren — im
     Wald und in den Weinbergen rund um Batzenhäusle.
-  image: /images/hero/image.jpeg
+  image: /images/hero/image.png
 quote:
   text: >-
     Bewusst, sorgsam und respektvoll gehen wir mit allem Lebendigen um — mit
@@ -22,6 +22,7 @@ features:
       Im Ortsteil Batzenhäusle, zwischen Wald und Weinbergen. Das Kind als
       eigenständige Persönlichkeit — das ist unser Grundgedanke.
     href: /kindergarten
+    image: /images/features/features/0/image.png
     icon: kg
   - eyebrow: Unter 3 Jahre
     title: Waldspielgruppen
@@ -29,4 +30,5 @@ features:
       Zwei betreute Gruppen am gleichen Standort. Schon die Kleinsten genießen
       die Frei- und Gestaltungsräume im Wald.
     href: /spielgruppe
+    image: /images/features/features/1/image.png
     icon: sg

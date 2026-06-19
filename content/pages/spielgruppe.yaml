@@ -17,6 +17,6 @@ cta:
   enabled: true
   text: Platz in der Spielgruppe sichern?
   buttonLabel: Jetzt vormerken
-  buttonHref: /anmeldung
+  buttonHref: /kontakt
   secondaryLabel: Kontakt
   secondaryHref: /kontakt
