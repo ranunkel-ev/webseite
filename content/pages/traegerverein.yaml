@@ -4,7 +4,7 @@ hero:
   description: >-
     Ein gemeinnütziger Elternverein, der seit 1997 den Waldkindergarten und die
     Waldspielgruppen in Waldkirch trägt und gestaltet.
-  image: /images/pages/traegerverein/hero/image.png
+  image: /images/pages/traegerverein/hero/image.webp
 cta:
   enabled: true
   text: Fragen zum Verein oder zur Mitgliedschaft?
