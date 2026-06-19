@@ -26,6 +26,8 @@ const cta = page?.cta;
       {hero?.quote && <p class="content-header-quote">„{hero.quote}"</p>}
     </div>
 
+    {hero?.image && <img class="content-header-img" src={hero.image} alt={hero.title || ''} />}
+
     {infoBox.length > 0 && (
       <div class="info-grid">
         {infoBox.map((item, i) => (

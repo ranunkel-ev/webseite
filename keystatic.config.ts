@@ -16,6 +16,14 @@ const bodyDocument = (label: string) =>
     componentBlocks,
   });
 
+/** Optionales Header-Bild, das auf Inhaltsseiten unter dem Titel angezeigt wird. */
+const headerImage = () =>
+  fields.image({
+    label: "Header-Bild (optional)",
+    directory: "public/images/pages",
+    publicPath: "/images/pages/",
+  });
+
 // Dev arbeitet standardmäßig lokal (ohne GitHub-Login); der Production-Build
 // speichert via GitHub. Für das einmalige GitHub-App-Setup lokal in den
 // github-Modus zwingen mit: `PUBLIC_KEYSTATIC_STORAGE=github npm run dev`.
@@ -64,6 +72,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
+            image: headerImage(),
           },
           { label: "Header" },
         ),
@@ -91,6 +100,7 @@ export default config({
             eyebrow: fields.text({ label: "Tag-Zeile" }),
             title: fields.text({ label: "Titel" }),
             quote: fields.text({ label: "Zitat", multiline: true }),
+            image: headerImage(),
           },
           { label: "Header" },
         ),
@@ -128,6 +138,7 @@ export default config({
             eyebrow: fields.text({ label: "Tag-Zeile" }),
             title: fields.text({ label: "Titel" }),
             quote: fields.text({ label: "Zitat", multiline: true }),
+            image: headerImage(),
           },
           { label: "Header" },
         ),
@@ -168,6 +179,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
+            image: headerImage(),
           },
           { label: "Header" },
         ),
@@ -214,6 +226,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
+            image: headerImage(),
           },
           { label: "Header" },
         ),
@@ -316,6 +329,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
+            image: headerImage(),
           },
           { label: "Header" },
         ),

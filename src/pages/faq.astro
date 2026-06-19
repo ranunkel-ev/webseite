@@ -25,6 +25,8 @@ const cta = page?.cta;
       {hero?.description && <p class="content-header-desc">{hero.description}</p>}
     </div>
 
+    {hero?.image && <img class="content-header-img" src={hero.image} alt={hero.title || ''} />}
+
     <div class="prose">
       <RichText document={bodyNodes} />
     </div>

@@ -32,6 +32,8 @@ const items = await Promise.all(
       {hero?.description && <p class="content-header-desc">{hero.description}</p>}
     </div>
 
+    {hero?.image && <img class="content-header-img" src={hero.image} alt={hero.title || ''} />}
+
     <div>
       {items.map((item) => (
         <article class={`article${item.image ? ' article--has-image' : ''}`}>
