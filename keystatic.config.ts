@@ -115,7 +115,7 @@ export default config({
             value: fields.text({ label: "Wert", multiline: true }),
           }),
           {
-            label: "Kurzinfos",
+            label: "Faktenstreifen",
             itemLabel: (props) => props.fields.label.value || "Info",
           },
         ),
@@ -153,7 +153,7 @@ export default config({
             value: fields.text({ label: "Wert", multiline: true }),
           }),
           {
-            label: "Kurzinfos",
+            label: "Faktenstreifen",
             itemLabel: (props) => props.fields.label.value || "Info",
           },
         ),

@@ -29,14 +29,11 @@ const cta = page?.cta;
     {hero?.image && <img class="content-header-img" src={hero.image} alt={hero.title || ''} />}
 
     {infoBox.length > 0 && (
-      <div class="info-grid">
-        {infoBox.map((item, i) => (
+      <div class="fact-strip" style={`--fact-cols: ${infoBox.length}`}>
+        {infoBox.map((item) => (
           <div>
-            <div class="info-grid-label">{item.label}</div>
-            {i === 0 || i === 3
-              ? <div class="info-grid-value" set:html={item.value.replace(/\n/g, '<br />')} />
-              : <div class="info-grid-value-sm" set:html={item.value.replace(/\n/g, '<br />')} />
-            }
+            <div class="fact-strip-label">{item.label}</div>
+            <div class="fact-strip-value" set:html={item.value.replace(/\n/g, '<br />')} />
           </div>
         ))}
       </div>
