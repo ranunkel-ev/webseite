@@ -12,11 +12,9 @@ infoBox:
       Rappeneckstraße 29
       79183 Waldkirch
   - label: Seit
-    value: "2006"
+    value: '2006'
 cta:
   enabled: true
   text: Platz in der Spielgruppe sichern?
   buttonLabel: Jetzt vormerken
   buttonHref: /kontakt
-  secondaryLabel: Kontakt
-  secondaryHref: /kontakt

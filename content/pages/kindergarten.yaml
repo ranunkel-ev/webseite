@@ -23,7 +23,5 @@ infoBox:
 cta:
   enabled: true
   text: Möchten Sie Ihr Kind anmelden?
-  buttonLabel: Jetzt vormerken
+  buttonLabel: Kontakt
   buttonHref: /kontakt
-  secondaryLabel: Kontakt
-  secondaryHref: /kontakt
