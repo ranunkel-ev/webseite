@@ -600,11 +600,21 @@ body {
   line-height: 1.8;
 }
 .content-header-img {
-  width: 100%;
+  /* Bricht den seitlichen 24px-Innenabstand von .page-content auf,
+     sodass das Bild breiter als die Textspalte bis an die Container-Kanten reicht. */
+  width: calc(100% + 48px);
+  max-width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
   max-height: 420px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 48px;
+}
+/* Auf kleinen Screens reicht das Bild bis an den Bildschirmrand (Full-Bleed) –
+   dort sind runde Ecken unpassend. */
+@media (max-width: 640px) {
+  .content-header-img { border-radius: 0; }
 }
 
 /* Section primitive */

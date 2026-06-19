@@ -16,12 +16,17 @@ const bodyDocument = (label: string) =>
     componentBlocks,
   });
 
-/** Optionales Header-Bild, das auf Inhaltsseiten unter dem Titel angezeigt wird. */
-const headerImage = () =>
+/**
+ * Optionales Header-Bild, das auf Inhaltsseiten unter dem Titel angezeigt wird.
+ * `slug` muss je Seite eindeutig sein, sonst teilen sich mehrere Seiten dieselbe
+ * Bilddatei (Keystatic leitet den Dateipfad aus `directory` + Feldpfad ab, der
+ * Singleton-Name fließt nicht ein).
+ */
+const headerImage = (slug: string) =>
   fields.image({
     label: "Header-Bild (optional)",
-    directory: "public/images/pages",
-    publicPath: "/images/pages/",
+    directory: `public/images/pages/${slug}`,
+    publicPath: `/images/pages/${slug}/`,
   });
 
 // Dev arbeitet standardmäßig lokal (ohne GitHub-Login); der Production-Build
@@ -72,7 +77,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
-            image: headerImage(),
+            image: headerImage("traegerverein"),
           },
           { label: "Header" },
         ),
@@ -100,7 +105,7 @@ export default config({
             eyebrow: fields.text({ label: "Tag-Zeile" }),
             title: fields.text({ label: "Titel" }),
             quote: fields.text({ label: "Zitat", multiline: true }),
-            image: headerImage(),
+            image: headerImage("kindergarten"),
           },
           { label: "Header" },
         ),
@@ -138,7 +143,7 @@ export default config({
             eyebrow: fields.text({ label: "Tag-Zeile" }),
             title: fields.text({ label: "Titel" }),
             quote: fields.text({ label: "Zitat", multiline: true }),
-            image: headerImage(),
+            image: headerImage("spielgruppe"),
           },
           { label: "Header" },
         ),
@@ -179,7 +184,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
-            image: headerImage(),
+            image: headerImage("aktuelles"),
           },
           { label: "Header" },
         ),
@@ -226,7 +231,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
-            image: headerImage(),
+            image: headerImage("faq"),
           },
           { label: "Header" },
         ),
@@ -329,7 +334,7 @@ export default config({
               label: "Beschreibungstext",
               multiline: true,
             }),
-            image: headerImage(),
+            image: headerImage("kontakt"),
           },
           { label: "Header" },
         ),

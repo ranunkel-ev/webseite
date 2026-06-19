@@ -2,6 +2,7 @@ hero:
   eyebrow: Waldspielgruppen
   title: Waldspielgruppen
   quote: Wir fördern eine Entwicklung zu gesunden und fröhlichen Kindern.
+  image: /images/pages/spielgruppe/hero/image.png
 infoBox:
   - label: Alter
     value: 2 bis 3 Jahre
