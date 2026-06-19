@@ -1,0 +1,61 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RichText from '../../components/RichText';
+import ClickableImage from '../../components/ClickableImage';
+import { buildAktuellesSlugs } from '../../utils/slug';
+import { nodesToPlainText } from '../../utils/plainText';
+
+export async function getStaticPaths() {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const page = await reader.singletons.aktuelles.read();
+  const items = page?.items ?? [];
+  const slugs = buildAktuellesSlugs(items);
+
+  return Promise.all(
+    items.map(async (item, index) => {
+      const bodyNodes = item.body ? await item.body() : [];
+      return {
+        params: { slug: slugs[index] },
+        props: {
+          highlight: item.highlight,
+          date: item.date,
+          title: item.title,
+          image: item.image,
+          bodyNodes,
+        },
+      };
+    })
+  );
+}
+
+const { highlight, date, title, image, bodyNodes } = Astro.props;
+const description = nodesToPlainText(bodyNodes).slice(0, 160);
+---
+
+<BaseLayout
+  title={`${title} — Aktuelles — Ranunkel e.V.`}
+  description={description}
+  activePage="/aktuelles"
+>
+  <div class="page-content">
+    <a class="btn-link article-back" href="/aktuelles">← Zurück zu Aktuelles</a>
+
+    <article class="article article--detail">
+      {image && (
+        <ClickableImage src={image} alt={title} className="article-img" client:visible />
+      )}
+      <div class="article-body">
+        <div class="article-meta">
+          {highlight && (
+            <span class="article-tag article-tag--highlight">Highlight</span>
+          )}
+          {date && <span class="article-date">{date}</span>}
+        </div>
+        <h1>{title}</h1>
+        <RichText document={bodyNodes} />
+      </div>
+    </article>
+  </div>
+</BaseLayout>

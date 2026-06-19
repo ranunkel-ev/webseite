@@ -971,6 +971,20 @@ body {
   margin-bottom: 16px;
 }
 
+.article-readmore {
+  margin-top: 4px;
+}
+.article-back {
+  margin-bottom: 28px;
+}
+.article--detail {
+  display: block;
+}
+.article--detail .article-img {
+  max-width: 420px;
+  margin-bottom: 24px;
+}
+
 /* ── FAQ ACCORDION ───────────────────────────── */
 .faq-group {
   margin-bottom: 48px;

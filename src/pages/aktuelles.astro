@@ -2,19 +2,24 @@
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RichText from '../components/RichText';
 import ClickableImage from '../components/ClickableImage';
+import { buildAktuellesSlugs } from '../utils/slug';
+import { nodesToPlainText } from '../utils/plainText';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const page = await reader.singletons.aktuelles.read();
 
 const hero = page?.hero;
 const rawItems = page?.items ?? [];
+const slugs = buildAktuellesSlugs(rawItems);
 
 const items = await Promise.all(
-  rawItems.map(async (item) => {
+  rawItems.map(async (item, index) => {
     const bodyNodes = item.body ? await item.body() : [];
-    return { ...item, bodyNodes };
+    const plain = nodesToPlainText(bodyNodes);
+    const truncated = plain.length > 160;
+    const teaser = truncated ? `${plain.slice(0, 160).trimEnd()}…` : plain;
+    return { ...item, teaser, truncated, slug: slugs[index] };
   })
 );
 ---
@@ -48,7 +53,10 @@ const items = await Promise.all(
               {item.date && <span class="article-date">{item.date}</span>}
             </div>
             <h2>{item.title}</h2>
-            <RichText document={item.bodyNodes} />
+            {item.teaser && <p>{item.teaser}</p>}
+            {item.truncated && (
+              <a class="btn-link article-readmore" href={`/aktuelles/${item.slug}`}>Mehr erfahren →</a>
+            )}
           </div>
         </article>
       ))}

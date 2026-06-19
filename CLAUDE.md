@@ -9,7 +9,7 @@
 
 ```
 src/
-  pages/          # Astro pages (index, kindergarten, spielgruppe, traegerverein, faq, aktuelles, anmeldung, impressum, datenschutz, kontakt)
+  pages/          # Astro pages (index, kindergarten, spielgruppe, traegerverein, faq, aktuelles, aktuelles/[slug] (Beitrag-Detailseite), anmeldung, impressum, datenschutz, kontakt)
   components/
     RichText.tsx  # DocumentRenderer for body fields; component block renderers here
     SiteNav.astro
@@ -22,6 +22,7 @@ src/
     global.css    # All styles; design tokens in :root at the top
   utils/
     plainText.ts
+    slug.ts       # slugify + buildAktuellesSlugs (Detailseiten-URLs aus Beitragstiteln, Umlaut-Transliteration)
 
 keystatic.config.ts  # All Keystatic singleton schemas (homepage, kindergarten, spielgruppe, traegerverein, faq, aktuelles, anmeldung, impressum, datenschutz, kontakt, site)
 
@@ -48,7 +49,3 @@ content/pages/   # YAML + mdoc files managed by Keystatic
 - `--c-brown: #b8834a` — brown accents
 - `--f-serif: 'Lora'` — serif headings
 - `--f-sans: 'DM Sans'` — body text
-
-# CTA-Box Pattern
-
-CTA boxes are separate optional fields in each page singleton (not inline component blocks). Schema: `enabled` (checkbox), `text`, `buttonLabel`, `buttonHref`, `secondaryLabel`, `secondaryHref`. Rendered in the Astro page after the prose content. Background uses `--c-gold` (matching Aktuelles banner).
