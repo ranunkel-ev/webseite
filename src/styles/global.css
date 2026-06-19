@@ -943,7 +943,7 @@ body {
 
 /* ── CTA BAR ─────────────────────────────────── */
 .cta-bar {
-  background: var(--c-green);
+  background: var(--c-gold);
   border-radius: 6px;
   padding: 32px 36px;
   display: flex;
@@ -954,7 +954,7 @@ body {
 .cta-bar p {
   font-family: var(--f-sans);
   font-size: 15px;
-  color: #b0cc9c;
+  color: #5a5020;
   line-height: 1.7;
 }
 .cta-bar-actions {
@@ -965,8 +965,8 @@ body {
 .cta-bar-primary {
   font-family: var(--f-sans);
   font-size: 14px;
-  background: white;
-  color: var(--c-green);
+  background: var(--c-green);
+  color: white;
   font-weight: 600;
   padding: 10px 22px;
   border-radius: 4px;
@@ -974,12 +974,12 @@ body {
   display: inline-block;
   transition: background 0.2s;
 }
-.cta-bar-primary:hover { background: #f0ebe0; }
+.cta-bar-primary:hover { background: #3a5e3c; }
 .cta-bar-secondary {
   font-family: var(--f-sans);
   font-size: 14px;
-  border: 1.5px solid rgba(255,255,255,0.4);
-  color: white;
+  border: 1.5px solid rgba(45,74,47,0.35);
+  color: var(--c-text);
   font-weight: 500;
   padding: 10px 20px;
   border-radius: 4px;
@@ -987,7 +987,7 @@ body {
   display: inline-block;
   transition: border-color 0.2s;
 }
-.cta-bar-secondary:hover { border-color: rgba(255,255,255,0.7); }
+.cta-bar-secondary:hover { border-color: var(--c-green); }
 
 /* ── RESPONSIVE ─────────────────────────────── */
 @media (max-width: 900px) {

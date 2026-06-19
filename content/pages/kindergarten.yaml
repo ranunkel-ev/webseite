@@ -20,3 +20,10 @@ infoBox:
     value: |-
       Melanie Geduhn · Mirko Lovric
       Julia Schuler · Petra Zink
+cta:
+  enabled: true
+  text: Möchten Sie Ihr Kind anmelden?
+  buttonLabel: Jetzt vormerken
+  buttonHref: /anmeldung
+  secondaryLabel: Kontakt
+  secondaryHref: /kontakt

@@ -13,3 +13,10 @@ infoBox:
       79183 Waldkirch
   - label: Seit
     value: "2006"
+cta:
+  enabled: true
+  text: Platz in der Spielgruppe sichern?
+  buttonLabel: Jetzt vormerken
+  buttonHref: /anmeldung
+  secondaryLabel: Kontakt
+  secondaryHref: /kontakt

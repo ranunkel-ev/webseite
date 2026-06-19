@@ -29,11 +29,16 @@ const cta = page?.cta;
       <RichText document={bodyNodes} />
     </div>
 
-    {cta && (
+    {cta?.enabled && (
       <div class="cta-bar" style="margin-top: 64px;">
         <p>{cta.text}</p>
         <div class="cta-bar-actions">
-          <a href="/kontakt" class="cta-bar-primary">{cta.buttonText}</a>
+          {cta.buttonLabel && (
+            <a href={cta.buttonHref || '#'} class="cta-bar-primary">{cta.buttonLabel}</a>
+          )}
+          {cta.secondaryLabel && (
+            <a href={cta.secondaryHref || '#'} class="cta-bar-secondary">{cta.secondaryLabel}</a>
+          )}
         </div>
       </div>
     )}

@@ -62,6 +62,17 @@ export default config({
           { label: "Header" },
         ),
         body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /kontakt" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
+        ),
       },
     }),
 
@@ -88,6 +99,17 @@ export default config({
           },
         ),
         body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /anmeldung" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
+        ),
       },
     }),
 
@@ -114,6 +136,17 @@ export default config({
           },
         ),
         body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /anmeldung" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
+        ),
       },
     }),
 
@@ -193,10 +226,104 @@ export default config({
         }),
         cta: fields.object(
           {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: true }),
             text: fields.text({ label: "Text", multiline: true }),
-            buttonText: fields.text({ label: "Button-Text" }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /kontakt" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
           },
-          { label: "CTA" },
+          { label: "CTA-Box (optional)" },
+        ),
+      },
+    }),
+
+    impressum: singleton({
+      label: "Impressum",
+      path: "content/pages/impressum",
+      schema: {
+        hero: fields.object(
+          {
+            eyebrow: fields.text({ label: "Tag-Zeile" }),
+            title: fields.text({ label: "Titel" }),
+            description: fields.text({
+              label: "Beschreibungstext",
+              multiline: true,
+            }),
+          },
+          { label: "Header" },
+        ),
+        body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /kontakt" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
+        ),
+      },
+    }),
+
+    datenschutz: singleton({
+      label: "Datenschutz",
+      path: "content/pages/datenschutz",
+      schema: {
+        hero: fields.object(
+          {
+            eyebrow: fields.text({ label: "Tag-Zeile" }),
+            title: fields.text({ label: "Titel" }),
+            description: fields.text({
+              label: "Beschreibungstext",
+              multiline: true,
+            }),
+          },
+          { label: "Header" },
+        ),
+        body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /kontakt" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
+        ),
+      },
+    }),
+
+    kontakt: singleton({
+      label: "Kontakt",
+      path: "content/pages/kontakt",
+      schema: {
+        hero: fields.object(
+          {
+            eyebrow: fields.text({ label: "Tag-Zeile" }),
+            title: fields.text({ label: "Titel" }),
+            description: fields.text({
+              label: "Beschreibungstext",
+              multiline: true,
+            }),
+          },
+          { label: "Header" },
+        ),
+        body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /kontakt" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
         ),
       },
     }),

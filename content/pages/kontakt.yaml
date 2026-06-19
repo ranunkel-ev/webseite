@@ -1,0 +1,11 @@
+hero:
+  eyebrow: Kontakt
+  title: Kontakt
+  description: So erreichen Sie uns.
+cta:
+  enabled: false
+  text: ''
+  buttonLabel: ''
+  buttonHref: ''
+  secondaryLabel: ''
+  secondaryHref: ''

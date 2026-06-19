@@ -5,40 +5,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RichText from '../components/RichText';
 
 const reader = createReader(process.cwd(), keystaticConfig);
-const page = await reader.singletons.spielgruppe.read();
+const page = await reader.singletons.kontakt.read();
 
 const hero = page?.hero;
-const infoBox = page?.infoBox ?? [];
 const bodyNodes = page?.body ? await page.body() : [];
 const cta = page?.cta;
 ---
 
 <BaseLayout
-  title="Waldspielgruppen — Ranunkel e.V."
-  description="Zwei betreute Waldspielgruppen für Kinder unter 3 Jahren in Waldkirch. Neugier, Bewegung und Naturerkundung von Anfang an."
-  activePage="/spielgruppe"
+  title="Kontakt — Ranunkel e.V."
+  description="So erreichen Sie den Waldkindergarten Ranunkel e.V. in Waldkirch."
+  activePage="/kontakt"
 >
   <div class="page-content">
     <div class="content-header">
-      <div class="content-header-eyebrow">{hero?.eyebrow || 'Waldspielgruppen'}</div>
+      <div class="content-header-eyebrow">{hero?.eyebrow || 'Kontakt'}</div>
       <div class="content-header-accent"></div>
-      <h1>{hero?.title || 'Waldspielgruppen'}</h1>
-      {hero?.quote && <p class="content-header-quote">„{hero.quote}"</p>}
+      <h1>{hero?.title || 'Kontakt'}</h1>
+      {hero?.description && <p class="content-header-desc">{hero.description}</p>}
     </div>
-
-    {infoBox.length > 0 && (
-      <div class="info-grid">
-        {infoBox.map((item, i) => (
-          <div>
-            <div class="info-grid-label">{item.label}</div>
-            {i === 0 || i === 3
-              ? <div class="info-grid-value" set:html={item.value.replace(/\n/g, '<br />')} />
-              : <div class="info-grid-value-sm" set:html={item.value.replace(/\n/g, '<br />')} />
-            }
-          </div>
-        ))}
-      </div>
-    )}
 
     <div class="prose">
       <RichText document={bodyNodes} />

@@ -3,6 +3,7 @@ import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RichText from '../components/RichText';
+import ClickableImage from '../components/ClickableImage';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const page = await reader.singletons.aktuelles.read();
@@ -35,7 +36,7 @@ const items = await Promise.all(
       {items.map((item) => (
         <article class={`article${item.image ? ' article--has-image' : ''}`}>
           {item.image && (
-            <img class="article-img" src={item.image} alt={item.title} />
+            <ClickableImage src={item.image} alt={item.title} className="article-img" client:visible />
           )}
           <div class="article-body">
             <div class="article-meta">

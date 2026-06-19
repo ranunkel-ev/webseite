@@ -17,7 +17,8 @@
     "@keystatic/core": "^0.5.50",
     "astro": "^6.4.7",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "yet-another-react-lightbox": "^3.32.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.3"

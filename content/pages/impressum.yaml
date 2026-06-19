@@ -1,0 +1,11 @@
+hero:
+  eyebrow: Rechtliches
+  title: Impressum
+  description: Angaben gemäß § 5 TMG und § 55 RStV.
+cta:
+  enabled: false
+  text: ''
+  buttonLabel: ''
+  buttonHref: ''
+  secondaryLabel: ''
+  secondaryHref: ''

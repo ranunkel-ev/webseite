@@ -1,0 +1,11 @@
+hero:
+  eyebrow: Rechtliches
+  title: Datenschutz
+  description: Informationen zum Umgang mit personenbezogenen Daten auf dieser Website.
+cta:
+  enabled: false
+  text: ''
+  buttonLabel: ''
+  buttonHref: ''
+  secondaryLabel: ''
+  secondaryHref: ''

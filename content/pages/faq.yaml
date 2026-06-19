@@ -4,5 +4,9 @@ hero:
   description: >-
     Antworten auf die häufigsten Fragen rund um Kindergarten und Spielgruppen.
 cta:
+  enabled: true
   text: Noch Fragen? Wir helfen gerne weiter.
-  buttonText: Kontakt aufnehmen
+  buttonLabel: Kontakt aufnehmen
+  buttonHref: /kontakt
+  secondaryLabel: ''
+  secondaryHref: ''

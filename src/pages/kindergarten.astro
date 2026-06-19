@@ -10,6 +10,7 @@ const page = await reader.singletons.kindergarten.read();
 const hero = page?.hero;
 const infoBox = page?.infoBox ?? [];
 const bodyNodes = page?.body ? await page.body() : [];
+const cta = page?.cta;
 ---
 
 <BaseLayout
@@ -39,5 +40,19 @@ const bodyNodes = page?.body ? await page.body() : [];
     <div class="prose">
       <RichText document={bodyNodes} />
     </div>
+
+    {cta?.enabled && (
+      <div class="cta-bar" style="margin-top: 48px;">
+        <p>{cta.text}</p>
+        <div class="cta-bar-actions">
+          {cta.buttonLabel && (
+            <a href={cta.buttonHref || '#'} class="cta-bar-primary">{cta.buttonLabel}</a>
+          )}
+          {cta.secondaryLabel && (
+            <a href={cta.secondaryHref || '#'} class="cta-bar-secondary">{cta.secondaryLabel}</a>
+          )}
+        </div>
+      </div>
+    )}
   </div>
 </BaseLayout>
