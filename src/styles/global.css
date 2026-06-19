@@ -60,6 +60,14 @@ body {
   font-family: var(--f-sans);
   font-size: 16px;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Schiebt den Footer ans Seitenende, auch bei wenig Inhalt */
+.site-main {
+  flex: 1 0 auto;
 }
 
 /* ── NAV ─────────────────────────────────────── */
@@ -400,6 +408,14 @@ body {
   text-underline-offset: 3px;
 }
 .footer-links a:hover {
+  color: #ffffff;
+}
+.footer-github {
+  display: inline-flex;
+  align-items: center;
+  color: var(--c-green-ft);
+}
+.footer-github:hover {
   color: #ffffff;
 }
 

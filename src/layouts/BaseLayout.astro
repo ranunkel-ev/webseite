@@ -1,5 +1,6 @@
 ---
 import { createReader } from '@keystatic/core/reader';
+import { ClientRouter } from 'astro:transitions';
 import keystaticConfig from '../../keystatic.config';
 import '../styles/global.css';
 import SiteNav from '../components/SiteNav.astro';
@@ -30,27 +31,43 @@ const site = await reader.singletons.site.read();
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <ClientRouter />
 </head>
 <body>
 
 <SiteNav
+  transition:persist
   activePage={activePage}
   brandPrimary={site?.nav?.brandPrimary}
   brandSub={site?.nav?.brandSub}
 />
 
-<slot />
+<main class="site-main">
+  <slot />
+</main>
 
-<SiteFooter copy={site?.footer?.copy} />
+<SiteFooter transition:persist copy={site?.footer?.copy} />
 
 <script>
-  const btn = document.getElementById('hamburger');
-  const nav = document.getElementById('navlinks');
-  if (btn && nav) {
-    btn.addEventListener('click', () => {
-      nav.classList.toggle('open');
+  // Hamburger toggle (delegated, survives persisted nav across navigations)
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement)?.closest('#hamburger');
+    if (!btn) return;
+    document.getElementById('navlinks')?.classList.toggle('open');
+  });
+
+  // Keep the active nav link in sync when the nav is persisted across
+  // client-side navigations (transition:persist + ClientRouter).
+  document.addEventListener('astro:page-load', () => {
+    const nav = document.getElementById('navlinks');
+    if (!nav) return;
+    nav.classList.remove('open');
+    nav.querySelectorAll('a').forEach((a) => {
+      const href = a.getAttribute('href');
+      const isActive = !!href && href !== '/' && location.pathname.startsWith(href);
+      a.classList.toggle('nav-active', isActive && !a.classList.contains('nav-cta'));
     });
-  }
+  });
 </script>
 
 </body>
