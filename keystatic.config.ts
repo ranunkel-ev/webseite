@@ -353,6 +353,37 @@ export default config({
       },
     }),
 
+    anmeldung: singleton({
+      label: "Anmeldung",
+      path: "content/pages/anmeldung",
+      schema: {
+        hero: fields.object(
+          {
+            eyebrow: fields.text({ label: "Tag-Zeile" }),
+            title: fields.text({ label: "Titel" }),
+            description: fields.text({
+              label: "Beschreibungstext",
+              multiline: true,
+            }),
+            image: headerImage("anmeldung"),
+          },
+          { label: "Header" },
+        ),
+        body: bodyDocument("Seiteninhalt"),
+        cta: fields.object(
+          {
+            enabled: fields.checkbox({ label: "CTA-Box anzeigen", defaultValue: false }),
+            text: fields.text({ label: "Text", multiline: true }),
+            buttonLabel: fields.text({ label: "Button-Text (primär)" }),
+            buttonHref: fields.text({ label: "Button-Link (primär)", description: "z. B. /kontakt" }),
+            secondaryLabel: fields.text({ label: "Button-Text (sekundär, optional)" }),
+            secondaryHref: fields.text({ label: "Button-Link (sekundär)" }),
+          },
+          { label: "CTA-Box (optional)" },
+        ),
+      },
+    }),
+
     homepage: singleton({
       label: "Startseite",
       path: "content/pages/home",

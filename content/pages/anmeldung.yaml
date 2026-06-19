@@ -1,0 +1,11 @@
+hero:
+  eyebrow: Anmeldung
+  title: Vormerkung für einen Betreuungsplatz
+  description: So melden Sie Ihr Kind für einen Platz im Waldkindergarten oder in einer Waldspielgruppe an.
+cta:
+  enabled: false
+  text: ''
+  buttonLabel: ''
+  buttonHref: ''
+  secondaryLabel: ''
+  secondaryHref: ''

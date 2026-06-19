@@ -9,7 +9,7 @@
 
 ```
 src/
-  pages/          # Astro pages (index, kindergarten, spielgruppe, traegerverein, faq, aktuelles, impressum, datenschutz, kontakt)
+  pages/          # Astro pages (index, kindergarten, spielgruppe, traegerverein, faq, aktuelles, anmeldung, impressum, datenschutz, kontakt)
   components/
     RichText.tsx  # DocumentRenderer for body fields; component block renderers here
     SiteNav.astro
@@ -23,7 +23,7 @@ src/
   utils/
     plainText.ts
 
-keystatic.config.ts  # All Keystatic singleton schemas (homepage, kindergarten, spielgruppe, traegerverein, faq, aktuelles, impressum, datenschutz, kontakt, site)
+keystatic.config.ts  # All Keystatic singleton schemas (homepage, kindergarten, spielgruppe, traegerverein, faq, aktuelles, anmeldung, impressum, datenschutz, kontakt, site)
 
 content/pages/   # YAML + mdoc files managed by Keystatic
   home.yaml
@@ -32,6 +32,7 @@ content/pages/   # YAML + mdoc files managed by Keystatic
   traegerverein.yaml + traegerverein/body.mdoc
   faq.yaml + faq/body.mdoc
   aktuelles.yaml + aktuelles/items/*/body.mdoc
+  anmeldung.yaml + anmeldung/body.mdoc
   impressum.yaml + impressum/body.mdoc
   datenschutz.yaml + datenschutz/body.mdoc
   kontakt.yaml + kontakt/body.mdoc

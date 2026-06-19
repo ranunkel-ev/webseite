@@ -10,12 +10,12 @@ infoBox:
     value: 3 bis 6 Jahre
   - label: Öffnungszeiten
     value: |-
-      Kernzeit: 8:45–12:30 Uhr
-      Erweitert: 7:45–13:45 Uhr
+      Kernzeit: 8:45–12:30
+      Erweitert: 7:45–13:45
       Mo–Fr
   - label: Standort
     value: |-
-      Rappeneckstraße 29
+      Rappeneckstr. 29
       79183 Waldkirch, Batzenhäusle
   - label: Team
     value: |-

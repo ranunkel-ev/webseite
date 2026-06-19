@@ -1,0 +1,48 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RichText from '../components/RichText';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const page = await reader.singletons.anmeldung.read();
+
+const hero = page?.hero;
+const bodyNodes = page?.body ? await page.body() : [];
+const cta = page?.cta;
+---
+
+<BaseLayout
+  title="Anmeldung — Ranunkel e.V."
+  description="Vormerkung für einen Betreuungsplatz im Waldkindergarten Ranunkel e.V. in Waldkirch."
+  activePage="/anmeldung"
+>
+  <div class="page-content">
+    <div class="content-header">
+      <div class="content-header-eyebrow">{hero?.eyebrow || 'Anmeldung'}</div>
+      <div class="content-header-accent"></div>
+      <h1>{hero?.title || 'Anmeldung'}</h1>
+      {hero?.description && <p class="content-header-desc">{hero.description}</p>}
+    </div>
+
+    {hero?.image && <img class="content-header-img" src={hero.image} alt={hero.title || ''} />}
+
+    <div class="prose">
+      <RichText document={bodyNodes} />
+    </div>
+
+    {cta?.enabled && (
+      <div class="cta-bar" style="margin-top: 48px;">
+        <p>{cta.text}</p>
+        <div class="cta-bar-actions">
+          {cta.buttonLabel && (
+            <a href={cta.buttonHref || '#'} class="cta-bar-primary">{cta.buttonLabel}</a>
+          )}
+          {cta.secondaryLabel && (
+            <a href={cta.secondaryHref || '#'} class="cta-bar-secondary">{cta.secondaryLabel}</a>
+          )}
+        </div>
+      </div>
+    )}
+  </div>
+</BaseLayout>
