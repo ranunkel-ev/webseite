@@ -16,12 +16,18 @@ const bodyDocument = (label: string) =>
     componentBlocks,
   });
 
+// Dev arbeitet standardmäßig lokal (ohne GitHub-Login); der Production-Build
+// speichert via GitHub. Für das einmalige GitHub-App-Setup lokal in den
+// github-Modus zwingen mit: `PUBLIC_KEYSTATIC_STORAGE=github npm run dev`.
+// (PUBLIC_-Prefix nötig, damit Client- und Server-Bundle dieselbe Wahl treffen.)
+const isDev = import.meta.env?.DEV ?? process.env.NODE_ENV !== "production";
+const useLocalStorage =
+  isDev && import.meta.env?.PUBLIC_KEYSTATIC_STORAGE !== "github";
+
 export default config({
-  // Lokal ohne GitHub-Login arbeiten; nur im Production-Build via GitHub speichern.
-  storage:
-    import.meta.env?.DEV ?? process.env.NODE_ENV !== "production"
-      ? { kind: "local" }
-      : { kind: "github", repo: "mhaertwig/ranunkel" },
+  storage: useLocalStorage
+    ? { kind: "local" }
+    : { kind: "github", repo: "ranunkel-ev/webseite" },
   ui: {
     brand: { name: "Ranunkel e.V." },
   },

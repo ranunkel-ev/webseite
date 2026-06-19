@@ -14,7 +14,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
   --c-green:    #2d4a2f;
   --c-green-dk: #1a2e1c;
   --c-green-md: #5c8552;
-  --c-green-ft: #608050;
+  --c-green-ft: #a9c79a;
   --c-brown:    #b8834a;
   --c-gold:     #d4a832;
   --c-text:     #2c2a26;
@@ -297,7 +297,7 @@ body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
-  color: #6a5600;
+  color: #4a3b00;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
@@ -311,7 +311,7 @@ body {
 .aktuelles-banner p {
   font-family: var(--f-sans);
   font-size: 15px;
-  color: #5a5020;
+  color: #3a3320;
   line-height: 1.7;
   max-width: 560px;
 }
@@ -351,8 +351,10 @@ body {
   font-family: var(--f-sans);
   font-size: 14px;
   color: var(--c-green-ft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
-.footer-links a:hover { color: #a0c090; }
+.footer-links a:hover { color: #ffffff; }
 
 /* ── NAV ACTIVE STATE ────────────────────────── */
 .nav-links a.nav-active {
@@ -960,7 +962,7 @@ body {
 .cta-bar p {
   font-family: var(--f-sans);
   font-size: 15px;
-  color: #5a5020;
+  color: #3a3320;
   line-height: 1.7;
 }
 .cta-bar-actions {
@@ -984,7 +986,7 @@ body {
 .cta-bar-secondary {
   font-family: var(--f-sans);
   font-size: 14px;
-  border: 1.5px solid rgba(45,74,47,0.35);
+  border: 1.5px solid rgba(45,74,47,0.6);
   color: var(--c-text);
   font-weight: 500;
   padding: 10px 20px;
