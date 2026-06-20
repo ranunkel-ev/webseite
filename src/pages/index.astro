@@ -12,7 +12,6 @@ const [home, aktuellesPage] = await Promise.all([
 
 const hero = home?.hero;
 const heroTitleLines = (hero?.title ?? 'Draußen sein.\nWachsen.\nEntdecken.').split('\n');
-const quote = home?.quote;
 const features = home?.features ?? [];
 
 const latestNewsRaw = aktuellesPage?.items.find((item) => item.highlight) ?? aktuellesPage?.items[0];
@@ -28,7 +27,7 @@ const latestNews = latestNewsRaw
   activePage="/"
 >
   <!-- HERO -->
-  <div class="hero">
+  <div class="hero hero--bordered">
     <div class="hero-content">
       <div class="hero-eyebrow">{hero?.eyebrow ?? 'Waldkirch · Seit 1997'}</div>
       <h1>
@@ -47,7 +46,10 @@ const latestNews = latestNewsRaw
     </div>
     <div class="hero-img">
       {hero?.image ? (
-        <img src={hero.image} alt="Ranunkel Waldkindergarten" style="width:100%;height:100%;object-fit:cover;" />
+        <>
+          <img src={hero.image} alt="Ranunkel Waldkindergarten" />
+          <div class="hero-img-overlay"></div>
+        </>
       ) : (
         <svg width="100%" height="100%" viewBox="0 0 640 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -77,17 +79,23 @@ const latestNews = latestNewsRaw
     </div>
   </div>
 
-  <!-- QUOTE -->
-  {quote && (
-    <div class="quote-section">
-      <blockquote>„{quote.text}"</blockquote>
-      <div class="quote-divider"></div>
-      {quote.sub && <p class="quote-sub">{quote.sub}</p>}
+  <!-- AKTUELLES -->
+  {latestNews && (
+    <div class="aktuelles-section">
+      <div class="aktuelles-card">
+        <div class="aktuelles-card-left">
+          <div class="aktuelles-eyebrow">Aktuelles{latestNews.date ? ` · ${latestNews.date}` : ''}</div>
+          <div class="aktuelles-title">{latestNews.title}</div>
+          <div class="aktuelles-text">{latestNews.bodyText || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</div>
+        </div>
+        <a href="/aktuelles" class="btn-link">Alle Neuigkeiten →</a>
+      </div>
     </div>
   )}
 
   <!-- FEATURES -->
   <div class="features">
+    <div class="section-label" style="grid-column: 1 / -1;">Unsere Angebote</div>
     {features.map((feature) => (
       <div class="feature-card">
         <div class={`feature-card-img${feature.image ? '' : ` feature-card-img-${feature.icon}`}`}>
@@ -119,13 +127,4 @@ const latestNews = latestNewsRaw
     ))}
   </div>
 
-  <!-- AKTUELLES BANNER -->
-  <div class="aktuelles-banner">
-    <div>
-      <div class="aktuelles-eyebrow">Aktuelles</div>
-      <h2>{latestNews?.title ?? 'Neuigkeiten'}</h2>
-      <p>{latestNews?.bodyText || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</p>
-    </div>
-    <a href="/aktuelles" class="aktuelles-btn">Alle Neuigkeiten</a>
-  </div>
 </BaseLayout>

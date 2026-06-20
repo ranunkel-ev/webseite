@@ -409,13 +409,6 @@ export default config({
           },
           { label: "Header" },
         ),
-        quote: fields.object(
-          {
-            text: fields.text({ label: "Zitat", multiline: true }),
-            sub: fields.text({ label: "Unterzeile", multiline: true }),
-          },
-          { label: "Zitat-Abschnitt" },
-        ),
         features: fields.array(
           fields.object({
             eyebrow: fields.text({ label: "Tag-Zeile (z.B. Alter)" }),
