@@ -350,6 +350,9 @@ body {
 /* ── AKTUELLES SECTION ───────────────────────── */
 .aktuelles-section {
   padding: 36px var(--pad) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 .aktuelles-section .btn-link {
   font-size: 13px;

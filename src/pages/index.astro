@@ -3,6 +3,7 @@ import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { nodesToPlainText } from '../utils/plainText';
+import { buildAktuellesSlugs } from '../utils/slug';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const [home, aktuellesPage] = await Promise.all([
@@ -14,11 +15,19 @@ const hero = home?.hero;
 const heroTitleLines = (hero?.title ?? 'Draußen sein.\nWachsen.\nEntdecken.').split('\n');
 const features = home?.features ?? [];
 
-const latestNewsRaw = aktuellesPage?.items.find((item) => item.highlight) ?? aktuellesPage?.items[0];
-const latestNewsBodyNodes = latestNewsRaw?.body ? await latestNewsRaw.body() : [];
-const latestNews = latestNewsRaw
-  ? { ...latestNewsRaw, bodyText: nodesToPlainText(latestNewsBodyNodes) }
-  : undefined;
+// Alle als "Highlight" markierten Beiträge anzeigen (untereinander). Gibt es
+// keine Highlights, fällt die Anzeige auf den neuesten Beitrag zurück.
+const allItems = aktuellesPage?.items ?? [];
+const allSlugs = buildAktuellesSlugs([...allItems]);
+const indexed = allItems.map((item, index) => ({ item, slug: allSlugs[index] }));
+const highlighted = indexed.filter(({ item }) => item.highlight);
+const selectedNews = highlighted.length > 0 ? highlighted : indexed.slice(0, 1);
+const newsList = await Promise.all(
+  selectedNews.map(async ({ item, slug }) => {
+    const bodyNodes = item.body ? await item.body() : [];
+    return { ...item, slug, bodyText: nodesToPlainText(bodyNodes) };
+  })
+);
 ---
 
 <BaseLayout
@@ -80,16 +89,18 @@ const latestNews = latestNewsRaw
   </div>
 
   <!-- AKTUELLES -->
-  {latestNews && (
+  {newsList.length > 0 && (
     <div class="aktuelles-section">
-      <div class="aktuelles-card">
-        <div class="aktuelles-card-left">
-          <div class="aktuelles-eyebrow">Aktuelles{latestNews.date ? ` · ${latestNews.date}` : ''}</div>
-          <div class="aktuelles-title">{latestNews.title}</div>
-          <div class="aktuelles-text">{latestNews.bodyText || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</div>
+      {newsList.map((news) => (
+        <div class="aktuelles-card">
+          <div class="aktuelles-card-left">
+            <div class="aktuelles-eyebrow">Aktuelles{news.date ? ` · ${news.date}` : ''}</div>
+            <div class="aktuelles-title">{news.title}</div>
+            <div class="aktuelles-text">{news.bodyText || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</div>
+          </div>
+          <a href={`/aktuelles/${news.slug}`} class="btn-link">Mehr erfahren →</a>
         </div>
-        <a href="/aktuelles" class="btn-link">Alle Neuigkeiten →</a>
-      </div>
+      ))}
     </div>
   )}
 
