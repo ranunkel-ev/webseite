@@ -164,7 +164,7 @@ body {
    darin bleibt auf 1200px begrenzt und bündig mit den Sektionen darunter. */
 .hero-band {
   background: var(--c-white);
-  border-bottom: 3px solid var(--c-brown);
+  border-bottom: 1px solid var(--c-brown);
 }
 .hero {
   display: grid;
