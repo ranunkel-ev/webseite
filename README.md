@@ -33,8 +33,6 @@ flowchart LR
 The website is static, does not use a database and does not set cookies.
 Dependencies are updated with Renovate.
 
-If you discover a security issue, please contact me via GitHub or the kindergarten directly.
-
 ## License
 
 The source code is licensed under the MIT License.
