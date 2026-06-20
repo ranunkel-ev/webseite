@@ -36,7 +36,8 @@ const newsList = await Promise.all(
   activePage="/"
 >
   <!-- HERO -->
-  <div class="hero hero--bordered">
+  <div class="hero-band">
+    <div class="hero">
     <div class="hero-content">
       <div class="hero-eyebrow">{hero?.eyebrow ?? 'Waldkirch · Seit 1997'}</div>
       <h1>
@@ -85,6 +86,7 @@ const newsList = await Promise.all(
           <text x="320" y="576" font-size="13" fill="#4a6030" text-anchor="middle" opacity="0.5" font-family="sans-serif">📷 Foto: Waldkinder beim Entdecken</text>
         </svg>
       )}
+    </div>
     </div>
   </div>
 

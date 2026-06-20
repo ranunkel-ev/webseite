@@ -78,10 +78,18 @@ body {
   height: 72px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: sticky;
   top: 0;
   z-index: 10;
+}
+.nav-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding-inline: var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-logo {
@@ -152,14 +160,22 @@ body {
 }
 
 /* ── HERO ─────────────────────────────────────── */
+/* Weißer Hintergrund + braune Linie über die volle Breite; der Inhalt
+   darin bleibt auf 1200px begrenzt und bündig mit den Sektionen darunter. */
+.hero-band {
+  background: var(--c-white);
+  border-bottom: 3px solid var(--c-brown);
+}
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 340px;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--pad);
 }
 .hero-content {
-  background: var(--c-white);
-  padding: 40px var(--pad);
+  padding: 40px 32px 40px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -225,9 +241,6 @@ body {
   );
   pointer-events: none;
 }
-.hero--bordered {
-  border-bottom: 3px solid var(--c-brown);
-}
 
 /* ── BUTTONS ─────────────────────────────────── */
 .btn-primary {
@@ -279,6 +292,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 1200px;
+  margin-inline: auto;
 }
 .features .section-label {
   margin-bottom: 0;
@@ -353,6 +368,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 1200px;
+  margin-inline: auto;
 }
 .aktuelles-section .btn-link {
   font-size: 13px;
@@ -1227,6 +1244,7 @@ body {
 
   .hero {
     grid-template-columns: 1fr;
+    padding-inline: 0;
   }
   .hero-img {
     min-height: 280px;
