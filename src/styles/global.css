@@ -411,7 +411,15 @@ body {
 /* ── FOOTER ──────────────────────────────────── */
 .sitefooter {
   background: var(--c-green-dk);
-  padding: 32px var(--pad);
+  padding-block: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding-inline: var(--pad);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1272,7 +1280,7 @@ body {
     gap: 16px;
   }
 
-  .sitefooter {
+  .footer-inner {
     flex-direction: column;
     gap: 16px;
     text-align: center;
