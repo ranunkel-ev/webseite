@@ -1,6 +1,6 @@
 # Waldkindergarten Website
 
-This repository contains the static website for the Waldkindergarten.
+This repository contains the static website for the Waldkindergarten Ranunkel e.V. Waldkirch.
 
 The website replaces an old Joomla installation that was no longer up to date and had security issues. The new setup is intentionally simple, static and low-maintenance.
 
