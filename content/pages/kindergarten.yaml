@@ -24,7 +24,7 @@ infoBox:
       Stefanie Schaich 
       Petra Zink
 cta:
-  enabled: true
+  enabled: false
   text: Möchten Sie Ihr Kind anmelden?
   buttonLabel: Kontakt
   buttonHref: /kontakt
