@@ -5,7 +5,7 @@ hero:
     Neuigkeiten, Hinweise und Termine aus dem Waldkindergarten und den
     Spielgruppen.
 items:
-  - highlight: false
+  - highlight: true
     date: April 2026
     title: Neue Beiträge ab September 2026
   - highlight: false
