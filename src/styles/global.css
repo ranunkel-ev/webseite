@@ -131,6 +131,20 @@ body {
 .nav-links a:hover {
   color: var(--c-green);
 }
+/* Home icon: icon-only in the desktop bar, icon + label in the mobile menu */
+.nav-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-home svg {
+  width: 21px;
+  height: 21px;
+  display: block;
+}
+.nav-home-label {
+  display: none;
+}
 .nav-links .nav-cta {
   background: var(--c-green);
   color: white;
@@ -1337,6 +1351,9 @@ body {
     padding: 16px var(--pad);
     gap: 16px;
     align-items: flex-start;
+  }
+  .nav-links.open .nav-home-label {
+    display: inline;
   }
   .nav-hamburger {
     display: flex;

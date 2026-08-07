@@ -30,6 +30,20 @@ const links = [
       </div>
     </a>
     <div class="nav-links" id="navlinks">
+      <a
+        href="/"
+        class={`nav-home${activePage === '/' ? ' nav-active' : ''}`}
+        aria-label="Startseite"
+        title="Startseite"
+        aria-current={activePage === '/' ? 'page' : undefined}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5" />
+          <path d="M5.5 9.5V20h13V9.5" />
+          <path d="M9.75 20v-5.5h4.5V20" />
+        </svg>
+        <span class="nav-home-label">Startseite</span>
+      </a>
       {links.map((link) => (
         <a href={link.href} class={activePage === link.href ? 'nav-active' : undefined}>
           {link.label}
