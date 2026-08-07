@@ -1,12 +1,9 @@
 hero:
   eyebrow: Häufige Fragen
   title: Häufige Fragen
-  description: >-
-    Antworten auf die häufigsten Fragen rund um Kindergarten und Spielgruppen.
+  description: Antworten auf die häufigsten Fragen rund um Kindergarten und Spielgruppen.
 cta:
   enabled: true
   text: Noch Fragen? Wir helfen gerne weiter.
   buttonLabel: Kontakt aufnehmen
   buttonHref: /kontakt
-  secondaryLabel: ''
-  secondaryHref: ''
