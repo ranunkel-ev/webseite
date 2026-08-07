@@ -19,8 +19,10 @@ infoBox:
       79183 Waldkirch, Batzenhäusle
   - label: Team Kindergarten
     value: |-
-      Melanie Geduhn · Mirko Lovric
-      Stefanie Schaich · Petra Zink
+      Melanie Geduhn 
+      Mirko Lovric
+      Stefanie Schaich 
+      Petra Zink
 cta:
   enabled: true
   text: Möchten Sie Ihr Kind anmelden?
