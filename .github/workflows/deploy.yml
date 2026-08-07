@@ -53,10 +53,26 @@ jobs:
           }
           echo "$(find dist -type f | wc -l) files in build."
 
+      # Refreshing the apt lists costs more than the package itself, so the
+      # .deb files are cached. The key includes the runner image version, so a
+      # new image fetches packages that match its library versions again.
+      - name: Cache lftp package
+        id: lftp-cache
+        uses: actions/cache@v4
+        with:
+          path: apt-cache
+          key: lftp-${{ runner.os }}-${{ env.ImageOS }}-${{ env.ImageVersion }}
+
       - name: Install lftp
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq lftp
+          if [ "${{ steps.lftp-cache.outputs.cache-hit }}" != "true" ]; then
+            mkdir -p apt-cache/partial
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --download-only \
+              -o Dir::Cache::archives="$PWD/apt-cache" lftp
+            sudo chown -R "$USER" apt-cache
+          fi
+          sudo dpkg -i apt-cache/*.deb
 
       - name: Pin SSH host key
         env:
