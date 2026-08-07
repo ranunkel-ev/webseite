@@ -201,13 +201,25 @@ export default config({
               directory: "public/images/aktuelles",
               publicPath: "/images/aktuelles/",
             }),
+            teaser: fields.text({
+              label: "Kurztext",
+              description:
+                "Wird auf der Startseite und in der Aktuelles-Übersicht angezeigt",
+              multiline: true,
+            }),
             body: fields.document({
-              label: "Text",
+              label: "Langfassung",
+              description:
+                "Wird auf der Detailseite des Beitrags angezeigt (mit Überschriften, Listen und Tabellen)",
               formatting: {
                 inlineMarks: { bold: true, italic: true },
                 listTypes: { ordered: true, unordered: true },
+                headingLevels: [2, 3],
+                blockTypes: { blockquote: true },
               },
               links: true,
+              dividers: true,
+              tables: true,
             }),
           }),
           {

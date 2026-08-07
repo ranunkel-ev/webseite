@@ -2,7 +2,6 @@
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { nodesToPlainText } from '../utils/plainText';
 import { buildAktuellesSlugs } from '../utils/slug';
 
 const reader = createReader(process.cwd(), keystaticConfig);
@@ -22,12 +21,7 @@ const allSlugs = buildAktuellesSlugs([...allItems]);
 const indexed = allItems.map((item, index) => ({ item, slug: allSlugs[index] }));
 const highlighted = indexed.filter(({ item }) => item.highlight);
 const selectedNews = highlighted.length > 0 ? highlighted : indexed.slice(0, 1);
-const newsList = await Promise.all(
-  selectedNews.map(async ({ item, slug }) => {
-    const bodyNodes = item.body ? await item.body() : [];
-    return { ...item, slug, bodyText: nodesToPlainText(bodyNodes) };
-  })
-);
+const newsList = selectedNews.map(({ item, slug }) => ({ ...item, slug }));
 ---
 
 <BaseLayout
@@ -98,7 +92,7 @@ const newsList = await Promise.all(
           <div class="aktuelles-card-left">
             <div class="aktuelles-eyebrow">Aktuelles{news.date ? ` · ${news.date}` : ''}</div>
             <div class="aktuelles-title">{news.title}</div>
-            <div class="aktuelles-text">{news.bodyText || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</div>
+            <div class="aktuelles-text">{news.teaser || 'Alle aktuellen Informationen und Ankündigungen finden Sie auf unserer Aktuelles-Seite.'}</div>
           </div>
           <a href={`/aktuelles/${news.slug}`} class="btn-link">Mehr erfahren →</a>
         </div>

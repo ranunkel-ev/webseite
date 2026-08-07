@@ -7,10 +7,18 @@ hero:
 items:
   - highlight: true
     title: Ferienbetreuung Sommer 2026
+    teaser: 'Der Beitrag für die Ferienbetreuung beträgt :'
   - highlight: true
     date: April 2026
     title: Neue Beiträge ab September 2026
+    teaser: >-
+      Ab dem 1. September 2026 gelten neue monatliche Beiträge für den
+      Kindergarten: 194 € für 1-Kind-Familien, 151 € für 2-Kind-Familien und 103
+      € für Familien mit 3 oder mehr Kindern.
   - highlight: false
     date: Mai 2026
     title: Abholberechtigung und Tagesvollmacht
+    teaser: >-
+      Sollte es vorkommen, dass weder Sie noch eine der benannten Personen Ihr
+      Kind abholen können, benötigen Sie eine Tagesvollmacht.
   - highlight: false

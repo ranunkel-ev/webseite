@@ -11,15 +11,15 @@ const page = await reader.singletons.aktuelles.read();
 
 const hero = page?.hero;
 const rawItems = page?.items ?? [];
-const slugs = buildAktuellesSlugs(rawItems);
+const slugs = buildAktuellesSlugs([...rawItems]);
 
+// Kurztext für die Übersicht, Langfassung nur als Hinweis darauf, ob es eine
+// Detailseite mit Inhalt gibt.
 const items = await Promise.all(
   rawItems.map(async (item, index) => {
     const bodyNodes = item.body ? await item.body() : [];
-    const plain = nodesToPlainText(bodyNodes);
-    const truncated = plain.length > 160;
-    const teaser = truncated ? `${plain.slice(0, 160).trimEnd()}…` : plain;
-    return { ...item, teaser, truncated, slug: slugs[index] };
+    const hasDetail = nodesToPlainText(bodyNodes).length > 0;
+    return { ...item, hasDetail, slug: slugs[index] };
   })
 );
 ---
@@ -54,7 +54,7 @@ const items = await Promise.all(
             </div>
             <h2>{item.title}</h2>
             {item.teaser && <p>{item.teaser}</p>}
-            {item.truncated && (
+            {item.hasDetail && (
               <a class="btn-link article-readmore" href={`/aktuelles/${item.slug}`}>Mehr erfahren →</a>
             )}
           </div>

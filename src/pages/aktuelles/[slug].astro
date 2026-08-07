@@ -11,7 +11,7 @@ export async function getStaticPaths() {
   const reader = createReader(process.cwd(), keystaticConfig);
   const page = await reader.singletons.aktuelles.read();
   const items = page?.items ?? [];
-  const slugs = buildAktuellesSlugs(items);
+  const slugs = buildAktuellesSlugs([...items]);
 
   return Promise.all(
     items.map(async (item, index) => {
@@ -23,6 +23,7 @@ export async function getStaticPaths() {
           date: item.date,
           title: item.title,
           image: item.image,
+          teaser: item.teaser,
           bodyNodes,
         },
       };
@@ -30,8 +31,9 @@ export async function getStaticPaths() {
   );
 }
 
-const { highlight, date, title, image, bodyNodes } = Astro.props;
-const description = nodesToPlainText(bodyNodes).slice(0, 160);
+const { highlight, date, title, image, teaser, bodyNodes } = Astro.props;
+// Meta-Description: Kurztext bevorzugt, sonst der Anfang der Langfassung.
+const description = (teaser || nodesToPlainText(bodyNodes)).slice(0, 160);
 ---
 
 <BaseLayout

@@ -1032,6 +1032,75 @@ body {
   margin-bottom: 24px;
 }
 
+/* Rich-Text der Beitrags-Langfassung (Detailseite) */
+.article--detail h2,
+.article--detail h3 {
+  font-family: var(--f-serif);
+  color: var(--c-green);
+  margin: 28px 0 12px;
+}
+.article--detail h2 {
+  font-size: 20px;
+}
+.article--detail h3 {
+  font-size: 17px;
+}
+.article--detail ul,
+.article--detail ol {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  color: var(--c-text-lt);
+  line-height: 1.85;
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+.article--detail ul {
+  list-style: disc;
+}
+.article--detail ol {
+  list-style: decimal;
+}
+.article--detail blockquote {
+  border-left: 3px solid var(--c-green-md);
+  margin: 0 0 16px;
+  padding: 4px 0 4px 16px;
+  color: var(--c-text-lt);
+  font-style: italic;
+}
+.article--detail hr {
+  border: none;
+  height: 1px;
+  background: var(--c-border);
+  margin: 32px 0;
+}
+.rich-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 20px;
+}
+.article--detail table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--f-sans);
+  font-size: 14px;
+  color: var(--c-text-lt);
+}
+.article--detail th,
+.article--detail td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--c-border);
+  line-height: 1.6;
+}
+.article--detail th {
+  font-weight: 600;
+  color: var(--c-green);
+  background: #ece6da;
+  border-bottom: 2px solid var(--c-border);
+}
+.article--detail tbody tr:last-child td {
+  border-bottom: none;
+}
+
 /* ── FAQ ACCORDION ───────────────────────────── */
 .faq-group {
   margin-bottom: 48px;

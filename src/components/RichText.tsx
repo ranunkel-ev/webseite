@@ -14,6 +14,45 @@ const componentBlocks: DocumentRendererProps['componentBlocks'] = {
   ),
 };
 
+/**
+ * Tabellen bekommen einen scrollbaren Wrapper, damit breite Tabellen auf dem
+ * Handy nicht die Seite aufziehen.
+ */
+const renderers: DocumentRendererProps['renderers'] = {
+  block: {
+    table: ({ head, body }) => (
+      <div className="rich-table-wrap">
+        <table>
+          {head && (
+            <thead>
+              <tr>
+                {head.map((cell, i) => (
+                  <th key={i} colSpan={cell.colSpan} rowSpan={cell.rowSpan}>
+                    {cell.children}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+          )}
+          <tbody>
+            {body.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, i) => (
+                  <td key={i} colSpan={cell.colSpan} rowSpan={cell.rowSpan}>
+                    {cell.children}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ),
+  },
+};
+
 export default function RichText({ document }: { document: DocumentRendererProps['document'] }) {
-  return <DocumentRenderer document={document} componentBlocks={componentBlocks} />;
+  return (
+    <DocumentRenderer document={document} componentBlocks={componentBlocks} renderers={renderers} />
+  );
 }
