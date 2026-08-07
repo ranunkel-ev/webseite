@@ -6,9 +6,6 @@ hero:
     Spielgruppen.
 items:
   - highlight: true
-    title: Waldfest 2017
-    image: /images/aktuelles/items/0/image.png
-  - highlight: true
     date: April 2026
     title: Neue Beiträge ab September 2026
   - highlight: false
