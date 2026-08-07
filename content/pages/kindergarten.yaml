@@ -10,7 +10,7 @@ infoBox:
     value: 3 bis 6 Jahre
   - label: Öffnungszeiten
     value: |-
-      Kernzeit: 8:45–12:30
+      Kernzeit: 8:00–13:00
       Erweitert: 7:45–13:45
       Mo–Fr
   - label: Standort
@@ -20,7 +20,7 @@ infoBox:
   - label: Team
     value: |-
       Melanie Geduhn · Mirko Lovric
-      Julia Schuler · Petra Zink
+      Stefanie Schaich · Petra Zink
 cta:
   enabled: true
   text: Möchten Sie Ihr Kind anmelden?
