@@ -6,12 +6,8 @@ hero:
     Spielgruppen.
 items:
   - highlight: true
-    date: Juni 2026
-    title: Waldfest 2026
-    image: /images/aktuelles/items/0/image.jpg
-  - highlight: false
     date: April 2026
-    title: Neue Beiträge ab September 2025
+    title: Neue Beiträge ab September 2026
   - highlight: false
     date: März 2026
     title: Frühlingsfest im Wald
