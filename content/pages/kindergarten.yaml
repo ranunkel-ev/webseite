@@ -9,10 +9,10 @@ infoBox:
   - label: Alter
     value: 3 bis 6 Jahre
   - label: Öffnungszeiten
-    value: |-
+    value: |
+      Mo-Fr
       Kernzeit: 8:00–13:00
       Erweitert: 7:45–13:45
-      Mo–Fr
   - label: Standort
     value: |-
       Rappeneckstr. 29
