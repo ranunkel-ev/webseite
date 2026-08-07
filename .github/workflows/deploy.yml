@@ -38,10 +38,42 @@ jobs:
 
       - run: npm ci
 
+      # The previous build, used below to decide which files actually changed.
+      # The key is unique per run, so only the restore-keys prefix ever hits and
+      # always picks the newest cache.
+      - name: Restore previous build
+        uses: actions/cache/restore@v4
+        with:
+          path: dist-prev
+          key: dist-${{ github.run_id }}
+          restore-keys: dist-
+
       - name: Build static output
         run: npm run build
         env:
           DEPLOY_TARGET: static
+
+      # lftp compares size and mtime to decide what to transfer. A fresh build
+      # stamps every file with the current time, so without this step the whole
+      # tree looks changed and gets re-uploaded. Restoring the old mtime on
+      # byte-identical files leaves only the real changes for the mirror.
+      - name: Keep mtimes of unchanged files
+        run: |
+          set -euo pipefail
+          if [ ! -d dist-prev ]; then
+            echo "No previous build cached - this run uploads everything."
+            exit 0
+          fi
+          unchanged=0
+          cd dist
+          while IFS= read -r f; do
+            old="../dist-prev/$f"
+            if [ -f "$old" ] && cmp -s "$f" "$old"; then
+              touch -r "$old" "$f"
+              unchanged=$((unchanged + 1))
+            fi
+          done < <(find . -type f)
+          echo "$unchanged files unchanged since the last deploy."
 
       # Guards against a broken build producing an empty dist/, which the
       # mirror step would then replicate by wiping half the webspace.
@@ -125,3 +157,18 @@ jobs:
           EOF
 
           lftp -f "$SCRIPT"
+
+      # Only after a real transfer - caching a dry-run build would make the next
+      # deploy skip files that were never uploaded.
+      - name: Cache this build for the next run
+        if: ${{ !inputs.dry_run }}
+        run: |
+          rm -rf dist-prev
+          cp -a dist dist-prev
+
+      - name: Save build cache
+        if: ${{ !inputs.dry_run }}
+        uses: actions/cache/save@v4
+        with:
+          path: dist-prev
+          key: dist-${{ github.run_id }}
