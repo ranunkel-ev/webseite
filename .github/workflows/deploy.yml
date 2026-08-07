@@ -1,0 +1,111 @@
+name: Deploy to Strato
+
+# Builds the site statically and mirrors it to the Strato webspace over SFTP.
+# Runs on every push to main, so Keystatic's content commits deploy too.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Simulate only - transfer nothing, delete nothing"
+        type: boolean
+        default: false
+
+# Two concurrent deploys would race each other on the webspace.
+concurrency:
+  group: deploy-strato
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Scopes the Strato credentials to this environment, which is restricted to
+    # the main branch. Repository secrets would be readable from any branch by
+    # anyone with write access.
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static output
+        run: npm run build
+        env:
+          DEPLOY_TARGET: static
+
+      # Guards against a broken build producing an empty dist/, which the
+      # mirror step would then replicate by wiping half the webspace.
+      - name: Sanity-check the build
+        run: |
+          test -s dist/index.html || {
+            echo "::error::dist/index.html is missing or empty - aborting before sync."
+            exit 1
+          }
+          echo "$(find dist -type f | wc -l) files in build."
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Pin SSH host key
+        env:
+          SFTP_HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.STRATO_SFTP_PORT || '22' }}
+          KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          if [ -n "$KNOWN_HOSTS" ]; then
+            printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+            echo "Host key taken from secret."
+          else
+            ssh-keyscan -p "$SFTP_PORT" -H "$SFTP_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+            echo "::warning::STRATO_SSH_KNOWN_HOSTS is not set - the host key was accepted unverified."
+          fi
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Mirror to Strato
+        env:
+          SFTP_HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.STRATO_SFTP_PORT || '22' }}
+          SFTP_USER: ${{ secrets.STRATO_SFTP_USER }}
+          SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD }}
+          REMOTE_DIR: ${{ vars.STRATO_REMOTE_DIR || '/' }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+
+          MIRROR_FLAGS="--reverse --delete --verbose --parallel=4"
+          # Leave paths managed by ACME/Strato untouched.
+          MIRROR_FLAGS="$MIRROR_FLAGS --exclude-glob .well-known/"
+          if [ "$DRY_RUN" = "true" ]; then
+            MIRROR_FLAGS="$MIRROR_FLAGS --dry-run"
+            echo "Dry run - nothing will be written."
+          fi
+
+          # Credentials go through a script file rather than the command line
+          # so the password never shows up in the process list.
+          SCRIPT="$(mktemp)"
+          trap 'rm -f "$SCRIPT"' EXIT
+          chmod 600 "$SCRIPT"
+
+          cat > "$SCRIPT" <<EOF
+          set sftp:auto-confirm no
+          set net:max-retries 3
+          set net:timeout 20
+          open -u "$SFTP_USER","$SFTP_PASSWORD" -p $SFTP_PORT sftp://$SFTP_HOST
+          mirror $MIRROR_FLAGS dist/ "$REMOTE_DIR"
+          bye
+          EOF
+
+          lftp -f "$SCRIPT"
