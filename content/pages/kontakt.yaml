@@ -4,8 +4,3 @@ hero:
   description: So erreichen Sie uns.
 cta:
   enabled: false
-  text: ''
-  buttonLabel: ''
-  buttonHref: ''
-  secondaryLabel: ''
-  secondaryHref: ''
