@@ -113,11 +113,17 @@ aborts when `dist/index.html` is missing, excludes `.well-known/`, and offers a
 
 - `--c-gold: #d4a832` — gold/yellow (Aktuelles banner, CTA bar background)
 - `--c-green: #2d4a2f` — dark green (nav, buttons, headings)
-- `--c-green-md: #5c8552` — medium green
+- `--c-green-md: #507448` — medium green (eyebrow labels, `.prose h2`)
 - `--c-bg: #f4f0e8` — warm off-white page background
-- `--c-brown: #b8834a` — brown accents
+- `--c-brown: #b8834a` — brown accents (borders and backgrounds only, too light
+  for text)
 - `--f-serif: 'Lora'` — serif headings
 - `--f-sans: 'DM Sans'` — body text
+
+Text colors must hold WCAG AA (4.5:1) against every background they land on —
+`--c-green-md` and `--c-text-xlt` are picked for exactly that and should not be
+lightened. The small uppercase eyebrow labels are the tightest case, because
+they sit on white and on `--c-bg`.
 
 # Fonts
 

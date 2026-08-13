@@ -1,8 +1,8 @@
-/* ── Fonts (selbst gehostet) ─────────────────
-   Variable Fonts aus @fontsource-variable (Lora 5.3.0, DM Sans 5.3.0),
-   Dateien liegen in public/fonts/. Selbst gehostet statt über Google Fonts,
-   damit keine Besucher-IPs an Google übertragen werden (DSGVO).
-   Nur die Subsets latin und latin-ext — für Deutsch ausreichend. */
+/* ── Fonts (self-hosted) ─────────────────────
+   Variable fonts from @fontsource-variable (Lora 5.3.0, DM Sans 5.3.0), files
+   live in public/fonts/. Self-hosted rather than loaded from Google Fonts, so
+   no visitor IPs are sent to Google (GDPR).
+   Only the latin and latin-ext subsets — enough for German. */
 @font-face {
   font-family: "Lora";
   font-style: normal;
@@ -104,14 +104,15 @@ button {
   --c-white: #ffffff;
   --c-green: #2d4a2f;
   --c-green-dk: #1a2e1c;
-  --c-green-md: #5c8552;
+  /* Dark enough for 4.5:1 body-text contrast on white, --c-bg and #e8f0e0 */
+  --c-green-md: #507448;
   --c-green-ft: #a9c79a;
   --c-brown: #b8834a;
   --c-gold: #d4a832;
   --c-text: #2c2a26;
   --c-text-md: #3c3830;
   --c-text-lt: #5a5550;
-  --c-text-xlt: #7a7060;
+  --c-text-xlt: #756c5c; /* 4.5:1 on --c-bg; was #7a7060 at 4.28:1 */
   --c-border: #ddd4bc;
   --c-hero-img: #8aa870;
   --f-serif: "Lora", Georgia, serif;
@@ -550,7 +551,7 @@ body {
   font-family: var(--f-sans);
   font-size: 12px;
   font-weight: 500;
-  color: #9a8e7a;
+  color: var(--c-text-xlt);
   letter-spacing: 0.04em;
   margin-bottom: 18px;
 }
@@ -771,7 +772,7 @@ body {
 .content-header-eyebrow {
   font-family: var(--f-sans);
   font-size: 12px;
-  color: #9a8e7a;
+  color: var(--c-text-xlt);
   letter-spacing: 0.05em;
   margin-bottom: 16px;
 }
@@ -975,7 +976,7 @@ body {
 .fee-note {
   font-family: var(--f-sans);
   font-size: 13px;
-  color: #9a8e7a;
+  color: var(--c-text-xlt);
   line-height: 1.7;
   margin-top: 12px;
 }
@@ -1053,7 +1054,7 @@ body {
 .article-date {
   font-family: var(--f-sans);
   font-size: 13px;
-  color: #9a8e7a;
+  color: var(--c-text-xlt);
 }
 .article h2 {
   font-family: var(--f-serif);
