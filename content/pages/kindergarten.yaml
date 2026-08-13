@@ -9,22 +9,22 @@ infoBox:
   - label: Alter
     value: 3 bis 6 Jahre
   - label: Öffnungszeiten
-    value: |
-      Mo-Fr
-      Kernzeit: 8:00–13:00
+    value: |-
+      Kernzeit: 8:45–12:30
       Erweitert: 7:45–13:45
+      Mo–Fr
   - label: Standort
     value: |-
       Rappeneckstr. 29
       79183 Waldkirch, Batzenhäusle
-  - label: Team Kindergarten
+  - label: Team
     value: |-
-      Melanie Geduhn 
-      Mirko Lovric
-      Stefanie Schaich 
+      Melanie Geduhn · 
+      Mirko Lovric · 
+      Julia Schuler · 
       Petra Zink
 cta:
-  enabled: false
+  enabled: true
   text: Möchten Sie Ihr Kind anmelden?
   buttonLabel: Kontakt
-  buttonHref: /Anmeldung
+  buttonHref: /kontakt
