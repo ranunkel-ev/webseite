@@ -7,7 +7,7 @@ hero:
 items:
   - highlight: true
     title: Ferienbetreuung Sommer 2026
-    teaser: 'Der Beitrag für die Ferienbetreuung beträgt:'
+    teaser: 'Der Beitrag für die Ferienbetreuung beträgt :'
   - highlight: true
     date: April 2026
     title: Neue Beiträge ab September 2026
@@ -21,4 +21,3 @@ items:
     teaser: >-
       Sollte es vorkommen, dass weder Sie noch eine der benannten Personen Ihr
       Kind abholen können, benötigen Sie eine Tagesvollmacht.
-  - highlight: false
