@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { fields } from '@keystatic/core';
 import { inline } from '@keystatic/core/content-components';
 import { Button, ButtonGroup } from '@keystar/ui/button';
-import { Dialog, DialogContainer, useDialogContainer } from '@keystar/ui/dialog';
+import { Dialog, DialogContainer } from '@keystar/ui/dialog';
 import { Icon } from '@keystar/ui/icon';
 import { fileTextIcon } from '@keystar/ui/icon/icons/fileTextIcon';
 import { Content } from '@keystar/ui/slots';
@@ -33,15 +33,15 @@ export const markdocOptions = {
 } as const;
 
 /** The value shape Keystatic's file field expects. */
-type Datei = { data: Uint8Array; extension: string; filename: string };
-type DokumentValue = { datei: Datei | null; titel: string };
+type FileValue = { data: Uint8Array; extension: string; filename: string };
+type DocumentLinkValue = { file: FileValue | null; label: string };
 
 /**
  * Keeps the extension but slugifies the rest, so umlauts and spaces from a
  * German filename ("Anmeldeformular Kindergarten 2026.pdf") never end up in the
  * public URL.
  */
-function normalizeDateiname(filename: string): string {
+function normalizeFilename(filename: string): string {
   const match = /^(.*?)(\.[^./]+)?$/.exec(filename);
   const base = slugify(match?.[1] ?? filename) || 'dokument';
   const extension = match?.[2]?.toLowerCase() ?? '';
@@ -52,7 +52,7 @@ function normalizeDateiname(filename: string): string {
  * Opens the browser's file picker, restricted to PDFs — a filter `fields.file`
  * itself does not offer. Resolves to null when the dialog is cancelled.
  */
-function pdfWaehlen(): Promise<Datei | null> {
+function pickPdf(): Promise<FileValue | null> {
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -66,7 +66,7 @@ function pdfWaehlen(): Promise<Datei | null> {
       resolve({
         data: new Uint8Array(await file.arrayBuffer()),
         extension: 'pdf',
-        filename: normalizeDateiname(file.name),
+        filename: normalizeFilename(file.name),
       });
     });
     input.addEventListener('cancel', () => resolve(null));
@@ -74,13 +74,13 @@ function pdfWaehlen(): Promise<Datei | null> {
   });
 }
 
-function DokumentDialog(props: {
-  value: DokumentValue;
-  onSubmit: (value: DokumentValue) => void;
+function DocumentLinkDialog(props: {
+  value: DocumentLinkValue;
+  onSubmit: (value: DocumentLinkValue) => void;
+  onCancel: () => void;
 }) {
-  const { dismiss } = useDialogContainer();
-  const [datei, setDatei] = useState(props.value.datei);
-  const [titel, setTitel] = useState(props.value.titel);
+  const [file, setFile] = useState(props.value.file);
+  const [label, setLabel] = useState(props.value.label);
 
   return (
     <Dialog size="small">
@@ -90,34 +90,33 @@ function DokumentDialog(props: {
           <VStack gap="regular" alignItems="start">
             <Button
               onPress={async () => {
-                const gewaehlt = await pdfWaehlen();
-                if (gewaehlt) setDatei(gewaehlt);
+                const picked = await pickPdf();
+                if (picked) setFile(picked);
               }}
             >
-              {datei ? 'Andere Datei wählen …' : 'PDF auswählen …'}
+              {file ? 'Andere Datei wählen …' : 'PDF auswählen …'}
             </Button>
             <Text size="small" color="neutralSecondary">
-              {datei ? datei.filename : 'Noch keine Datei gewählt'}
+              {file ? file.filename : 'Noch keine Datei gewählt'}
             </Text>
           </VStack>
           <TextField
             label="Link-Text"
             description="Wird im Fließtext angezeigt, z. B. „Anmeldeformular“"
-            value={titel}
-            onChange={setTitel}
+            value={label}
+            onChange={setLabel}
             autoFocus
           />
         </VStack>
       </Content>
       <ButtonGroup>
-        <Button onPress={dismiss}>Abbrechen</Button>
+        <Button onPress={props.onCancel}>Abbrechen</Button>
         <Button
           prominence="high"
-          isDisabled={!datei}
+          isDisabled={!file}
           onPress={() => {
-            if (!datei) return;
-            props.onSubmit({ datei, titel: titel.trim() || datei.filename });
-            dismiss();
+            if (!file) return;
+            props.onSubmit({ file, label: label.trim() || file.filename });
           }}
         >
           Übernehmen
@@ -128,19 +127,32 @@ function DokumentDialog(props: {
 }
 
 /**
- * Rendered for every dokument node, regardless of selection — which is what lets
- * it open the dialog on its own. Keystatic's insert command only inserts the
- * node without selecting it, so its built-in edit popover would stay hidden
+ * Rendered for every documentLink node, regardless of selection — which is what
+ * lets it open the dialog on its own. Keystatic's insert command only inserts
+ * the node without selecting it, so its built-in edit popover would stay hidden
  * until the editor clicks the node.
  */
-function DokumentNodeView(props: {
-  value: DokumentValue;
-  onChange: (value: DokumentValue) => void;
+function DocumentLinkNodeView(props: {
+  value: DocumentLinkValue;
+  onChange: (value: DocumentLinkValue) => void;
   onRemove: () => void;
 }) {
   // A node without a file was just inserted -> go straight to the dialog.
-  const [isOpen, setIsOpen] = useState(() => props.value.datei === null);
-  const label = props.value.titel || props.value.datei?.filename || 'Dokument';
+  const [isOpen, setIsOpen] = useState(() => props.value.file === null);
+  /**
+   * Whether this node ever received a file. A ref, not `props.value`: right
+   * after submitting, the ProseMirror transaction has been dispatched but this
+   * component has not re-rendered yet, so `props.value.file` would still read
+   * null and the cleanup below would delete the node we just filled.
+   */
+  const hasFile = useRef(props.value.file !== null);
+  const label = props.value.label || props.value.file?.filename || 'Dokument';
+
+  const close = () => {
+    setIsOpen(false);
+    // Closed without ever picking a file: don't leave an empty node behind.
+    if (!hasFile.current) props.onRemove();
+  };
 
   return (
     <>
@@ -161,17 +173,15 @@ function DokumentNodeView(props: {
         <Icon src={fileTextIcon} />
         {label}
       </span>
-      <DialogContainer
-        onDismiss={() => {
-          setIsOpen(false);
-          // Cancelled right after inserting: don't leave an empty node behind.
-          if (!props.value.datei) props.onRemove();
-        }}
-      >
+      <DialogContainer onDismiss={close}>
         {isOpen && (
-          <DokumentDialog
+          <DocumentLinkDialog
             value={props.value}
+            onCancel={close}
             onSubmit={(value) => {
+              // Closes by unmounting the dialog rather than dismissing it, so
+              // onDismiss does not run for a submit.
+              hasFile.current = true;
               props.onChange(value);
               setIsOpen(false);
             }}
@@ -183,7 +193,7 @@ function DokumentNodeView(props: {
 }
 
 export const components = {
-  dokument: inline({
+  documentLink: inline({
     label: 'Dokument-Link',
     description: 'PDF hochladen und mitten im Text verlinken',
     icon: fileTextIcon,
@@ -194,19 +204,19 @@ export const components = {
        * each other. `transformFilename` only covers Keystatic's own edit form —
        * the dialog above normalizes the name itself.
        */
-      datei: fields.file({
+      file: fields.file({
         label: 'Datei',
         description: 'PDF-Dokument',
         directory: 'public/downloads',
         publicPath: '/downloads/',
         validation: { isRequired: true },
-        transformFilename: normalizeDateiname,
+        transformFilename: normalizeFilename,
       }),
-      titel: fields.text({
+      label: fields.text({
         label: 'Link-Text',
         description: 'Wird im Fließtext angezeigt, z. B. „Anmeldeformular“',
       }),
     },
-    NodeView: DokumentNodeView,
+    NodeView: DocumentLinkNodeView,
   }),
 };

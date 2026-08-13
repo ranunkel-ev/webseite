@@ -4,7 +4,7 @@ import keystaticConfig from '../../../keystatic.config';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RichText from '../../components/RichText';
 import ClickableImage from '../../components/ClickableImage';
-import { buildAktuellesSlugs } from '../../utils/slug';
+import { buildPostSlugs } from '../../utils/slug';
 import { markdocToPlainText } from '../../utils/plainText';
 import { renderBody } from '../../utils/markdoc';
 
@@ -12,12 +12,12 @@ export async function getStaticPaths() {
   const reader = createReader(process.cwd(), keystaticConfig);
   const page = await reader.singletons.aktuelles.read();
   const items = page?.items ?? [];
-  const slugs = buildAktuellesSlugs([...items]);
+  const slugs = buildPostSlugs([...items]);
 
   return Promise.all(
     items.map(async (item, index) => {
-      // Markdoc hier schon transformieren: der Reader liefert Ast.Node-Instanzen
-      // mit Methoden, die als Props zwischen den Routen nicht überleben.
+      // Transform Markdoc here already: the reader returns Ast.Node instances
+      // whose methods do not survive being passed between routes as props.
       const body = item.body ? await item.body() : null;
       return {
         params: { slug: slugs[index] },
@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 }
 
 const { highlight, date, title, image, teaser, content, plainText } = Astro.props;
-// Meta-Description: Kurztext bevorzugt, sonst der Anfang der Langfassung.
+// Meta description: prefer the teaser, fall back to the start of the body.
 const description = (teaser || plainText).slice(0, 160);
 ---
 

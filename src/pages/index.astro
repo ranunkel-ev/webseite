@@ -2,7 +2,7 @@
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { buildAktuellesSlugs } from '../utils/slug';
+import { buildPostSlugs } from '../utils/slug';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const [home, aktuellesPage] = await Promise.all([
@@ -14,10 +14,10 @@ const hero = home?.hero;
 const heroTitleLines = (hero?.title ?? 'Draußen sein.\nWachsen.\nEntdecken.').split('\n');
 const features = home?.features ?? [];
 
-// Alle als "Highlight" markierten Beiträge anzeigen (untereinander). Gibt es
-// keine Highlights, fällt die Anzeige auf den neuesten Beitrag zurück.
+// Show every post flagged as "Highlight", stacked. With no highlights at all,
+// fall back to the most recent post.
 const allItems = aktuellesPage?.items ?? [];
-const allSlugs = buildAktuellesSlugs([...allItems]);
+const allSlugs = buildPostSlugs([...allItems]);
 const indexed = allItems.map((item, index) => ({ item, slug: allSlugs[index] }));
 const highlighted = indexed.filter(({ item }) => item.highlight);
 const selectedNews = highlighted.length > 0 ? highlighted : indexed.slice(0, 1);

@@ -3,8 +3,22 @@
 - Use astro for the design
 - Make content editable by keystatic
 - Use mdoc for rich text fields
-- Write code comments in English (site content and Keystatic UI labels stay German)
 - Update CLAUDE.md if something changes
+
+## Language
+
+Everything in the repo is English — no German anywhere in the code, even when
+the conversation is in German. That covers identifiers (variables, functions,
+types, components, props, CSS class names), comments, schema and field keys,
+Markdoc tag and attribute names, file names, commit messages, and CI step
+names.
+
+The only German is text that a visitor or an editor actually reads:
+
+- site copy in `content/` and hard-coded fallback strings in the pages
+- Keystatic UI labels, descriptions and placeholders (`label:`, `description:`)
+- URL segments that are page names (`/aktuelles`, `/impressum`, `/anmeldung`)
+  and slugs generated from German titles
 
 # Project Structure
 
@@ -16,7 +30,7 @@ src/
     SiteNav.astro
     SiteFooter.astro
   keystatic/
-    contentComponents.tsx  # Rich-text content component (dokument) + markdocOptions
+    contentComponents.tsx  # Rich-text content component (documentLink) + markdocOptions
   layouts/
     BaseLayout.astro
   styles/
@@ -54,14 +68,15 @@ one `bodyMarkdoc()` helper in `keystatic.config.ts` and the `markdocOptions` fro
 `src/keystatic/contentComponents.tsx`. Content components are written with the
 `@keystatic/core/content-components` API:
 
-There is one component: `dokument` — inline, `{% dokument datei="…" titel="…" /%}`
-→ `.doc-link` in the middle of a sentence.
+There is one component: `documentLink` — inline,
+`{% documentLink file="…" label="…" /%}` → `.doc-link` in the middle of a
+sentence.
 
 Adding a component means three places: the definition in `contentComponents.tsx`,
 the tag → component name mapping in `src/utils/markdoc.ts`, and the React renderer
 in `src/components/RichText.tsx`.
 
-`dokument` ships its own `NodeView` (Keystar UI dialog) instead of a `ContentView`.
+`documentLink` ships its own `NodeView` (Keystar UI dialog) instead of a `ContentView`.
 Keystatic's insert command only inserts the node without selecting it, so its
 built-in edit popover would stay hidden until the editor clicks the node — the
 NodeView renders regardless of selection and opens the dialog itself whenever the

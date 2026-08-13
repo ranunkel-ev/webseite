@@ -10,7 +10,7 @@ const baseConfig = fields.markdoc.createMarkdocConfig({
   options: markdocOptions,
   components,
   render: {
-    tags: { dokument: 'Dokument' },
+    tags: { documentLink: 'DocumentLink' },
   },
 });
 

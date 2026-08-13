@@ -20,19 +20,19 @@ const Table = ({ children }: Children) => (
   </div>
 );
 
-const Dokument = ({ datei, titel }: { datei?: string; titel?: string }) =>
-  datei ? (
-    <a className="doc-link" href={datei} download>
-      {titel || dateiname(datei)}
+const DocumentLink = ({ file, label }: { file?: string; label?: string }) =>
+  file ? (
+    <a className="doc-link" href={file} download>
+      {label || filename(file)}
     </a>
   ) : null;
 
 /** "/downloads/anmeldeformular.pdf" → "anmeldeformular.pdf" */
-function dateiname(pfad: string): string {
-  return pfad.slice(pfad.lastIndexOf('/') + 1);
+function filename(path: string): string {
+  return path.slice(path.lastIndexOf('/') + 1);
 }
 
-const components = { Doc, Table, Dokument };
+const components = { Doc, Table, DocumentLink };
 
 export default function RichText({ content }: { content: RenderableTreeNode }) {
   return <>{Markdoc.renderers.react(content, React, { components })}</>;

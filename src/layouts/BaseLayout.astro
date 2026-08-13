@@ -28,8 +28,8 @@ const site = await reader.singletons.site.read();
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <!-- Selbst gehostete Schriften (siehe global.css); die beiden latin-Dateien
-       werden auf jeder Seite gebraucht und daher vorgeladen. -->
+  <!-- Self-hosted fonts (see global.css); the two latin files are needed on
+       every page and are therefore preloaded. -->
   <link rel="preload" href="/fonts/dm-sans-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/lora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
   <ClientRouter />

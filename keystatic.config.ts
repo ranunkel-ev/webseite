@@ -1,7 +1,7 @@
 import { config, fields, singleton } from "@keystatic/core";
 import { components, markdocOptions } from "./src/keystatic/contentComponents";
 
-/** Gemeinsames Rich-Text-Feld für alle Seiten- und Beitrags-Inhalte. */
+/** The shared rich-text field for every page and post body. */
 const bodyMarkdoc = (label: string, description?: string) =>
   fields.markdoc({
     label,
@@ -11,10 +11,10 @@ const bodyMarkdoc = (label: string, description?: string) =>
   });
 
 /**
- * Optionales Header-Bild, das auf Inhaltsseiten unter dem Titel angezeigt wird.
- * `slug` muss je Seite eindeutig sein, sonst teilen sich mehrere Seiten dieselbe
- * Bilddatei (Keystatic leitet den Dateipfad aus `directory` + Feldpfad ab, der
- * Singleton-Name fließt nicht ein).
+ * Optional header image, shown below the title on content pages. `slug` has to
+ * be unique per page — otherwise several pages share the same image file,
+ * because Keystatic derives the file path from `directory` plus the field path
+ * and never from the singleton's name.
  */
 const headerImage = (slug: string) =>
   fields.image({
@@ -23,10 +23,10 @@ const headerImage = (slug: string) =>
     publicPath: `/images/pages/${slug}/`,
   });
 
-// Dev arbeitet standardmäßig lokal (ohne GitHub-Login); der Production-Build
-// speichert via GitHub. Für das einmalige GitHub-App-Setup lokal in den
-// github-Modus zwingen mit: `PUBLIC_KEYSTATIC_STORAGE=github npm run dev`.
-// (PUBLIC_-Prefix nötig, damit Client- und Server-Bundle dieselbe Wahl treffen.)
+// Dev defaults to local storage (no GitHub login); production saves via GitHub.
+// For the one-off GitHub app setup, force github mode locally with:
+// `PUBLIC_KEYSTATIC_STORAGE=github npm run dev`. (The PUBLIC_ prefix is
+// required so the client and server bundles make the same choice.)
 const isDev = import.meta.env?.DEV ?? process.env.NODE_ENV !== "production";
 const useLocalStorage =
   isDev && import.meta.env?.PUBLIC_KEYSTATIC_STORAGE !== "github";

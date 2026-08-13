@@ -3,7 +3,7 @@ import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ClickableImage from '../components/ClickableImage';
-import { buildAktuellesSlugs } from '../utils/slug';
+import { buildPostSlugs } from '../utils/slug';
 import { markdocToPlainText } from '../utils/plainText';
 
 const reader = createReader(process.cwd(), keystaticConfig);
@@ -11,10 +11,10 @@ const page = await reader.singletons.aktuelles.read();
 
 const hero = page?.hero;
 const rawItems = page?.items ?? [];
-const slugs = buildAktuellesSlugs([...rawItems]);
+const slugs = buildPostSlugs([...rawItems]);
 
-// Kurztext für die Übersicht, Langfassung nur als Hinweis darauf, ob es eine
-// Detailseite mit Inhalt gibt.
+// The teaser is what the overview shows; the body is only checked to decide
+// whether there is a detail page with content to link to.
 const items = await Promise.all(
   rawItems.map(async (item, index) => {
     const body = item.body ? await item.body() : null;

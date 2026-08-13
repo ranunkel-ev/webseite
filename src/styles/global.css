@@ -131,7 +131,7 @@ body {
   min-height: 100vh;
 }
 
-/* Schiebt den Footer ans Seitenende, auch bei wenig Inhalt */
+/* Pushes the footer to the bottom of the page, even with little content */
 .site-main {
   flex: 1 0 auto;
 }
@@ -239,8 +239,8 @@ body {
 }
 
 /* ── HERO ─────────────────────────────────────── */
-/* Weißer Hintergrund + braune Linie über die volle Breite; der Inhalt
-   darin bleibt auf 1200px begrenzt und bündig mit den Sektionen darunter. */
+/* White background plus a brown rule across the full width; the content inside
+   stays capped at 1200px and flush with the sections below. */
 .hero-band {
   background: var(--c-white);
   border-bottom: 1px solid var(--c-brown);
@@ -293,9 +293,9 @@ body {
   background: var(--c-hero-img);
   position: relative;
 }
-/* Bild absolut aus dem Fluss nehmen, damit nicht seine Eigenhöhe die
-   Hero-Höhe bestimmt – stattdessen gibt die linke Spalte die Höhe vor,
-   das Bild füllt sie. */
+/* Take the image out of the flow so its intrinsic height does not drive the
+   hero height — the left column sets the height instead and the image fills
+   it. */
 .hero-img img {
   position: absolute;
   inset: 0;
@@ -804,8 +804,8 @@ body {
   line-height: 1.8;
 }
 .content-header-img {
-  /* Bricht den seitlichen 24px-Innenabstand von .page-content auf,
-     sodass das Bild breiter als die Textspalte bis an die Container-Kanten reicht. */
+  /* Breaks out of the 24px side padding of .page-content, so the image runs
+     wider than the text column all the way to the container edges. */
   width: calc(100% + 48px);
   max-width: calc(100% + 48px);
   margin-left: -24px;
@@ -815,8 +815,8 @@ body {
   border-radius: 8px;
   margin-bottom: 48px;
 }
-/* Auf kleinen Screens reicht das Bild bis an den Bildschirmrand (Full-Bleed) –
-   dort sind runde Ecken unpassend. */
+/* On small screens the image runs full-bleed to the edge of the viewport,
+   where rounded corners look wrong. */
 @media (max-width: 640px) {
   .content-header-img {
     border-radius: 0;
@@ -1098,7 +1098,7 @@ body {
   margin-bottom: 24px;
 }
 
-/* Rich-Text der Beitrags-Langfassung (Detailseite) */
+/* Rich text of the long-form post body (detail page) */
 .article--detail h2,
 .article--detail h3 {
   font-family: var(--f-serif);
@@ -1330,8 +1330,8 @@ body {
   color: var(--c-green);
 }
 
-/* ── DOKUMENT-LINK ───────────────────────────── */
-/* Inline-Link auf ein hochgeladenes Dokument, mitten im Fließtext. */
+/* ── DOCUMENT LINK ───────────────────────────── */
+/* Inline link to an uploaded document, in the middle of running text. */
 .doc-link {
   font-family: var(--f-sans);
   color: var(--c-green);

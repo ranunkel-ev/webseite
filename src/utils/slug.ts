@@ -1,4 +1,4 @@
-/** Wandelt einen Titel in einen URL-tauglichen Slug um (Umlaute → ae/oe/ue/ss). */
+/** Turns a title into a URL-safe slug (umlauts → ae/oe/ue/ss). */
 export function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -11,11 +11,11 @@ export function slugify(text: string): string {
 }
 
 /**
- * Erzeugt deterministisch eindeutige Slugs für die Aktuelles-Beiträge in
- * Array-Reihenfolge. Bei Kollisionen wird ein Suffix (-2, -3, …) angehängt,
- * damit Listen-Link und Detail-Route identische Slugs liefern.
+ * Builds deterministically unique slugs for the Aktuelles posts in array order.
+ * Collisions get a suffix (-2, -3, …) so the list link and the detail route
+ * always produce identical slugs.
  */
-export function buildAktuellesSlugs(items: { title?: string | null }[]): string[] {
+export function buildPostSlugs(items: { title?: string | null }[]): string[] {
   const seen = new Map<string, number>();
   return items.map((item, index) => {
     const base = slugify(item.title ?? '') || `beitrag-${index + 1}`;
