@@ -12,17 +12,18 @@
 src/
   pages/          # Astro pages (index, kindergarten, spielgruppe, traegerverein, faq, aktuelles, aktuelles/[slug] (Beitrag-Detailseite), anmeldung, impressum, datenschutz, kontakt)
   components/
-    RichText.tsx  # DocumentRenderer for body fields; component block renderers here
+    RichText.tsx  # Markdoc React renderer for body fields; content component renderers here
     SiteNav.astro
     SiteFooter.astro
   keystatic/
-    componentBlocks.tsx  # Rich-text component blocks (currently: hinweis only)
+    contentComponents.tsx  # Rich-text content component (dokument) + markdocOptions
   layouts/
     BaseLayout.astro
   styles/
     global.css    # All styles; design tokens in :root at the top
   utils/
-    plainText.ts
+    markdoc.ts    # Shared Markdoc config + renderBody() (AST → renderable tree)
+    plainText.ts  # markdocToPlainText for meta descriptions
     slug.ts       # slugify + buildAktuellesSlugs (Detailseiten-URLs aus Beitragstiteln, Umlaut-Transliteration)
 
 keystatic.config.ts  # All Keystatic singleton schemas (homepage, kindergarten, spielgruppe, traegerverein, faq, aktuelles, anmeldung, impressum, datenschutz, kontakt, site)
@@ -42,7 +43,33 @@ content/pages/   # YAML + mdoc files managed by Keystatic
   datenschutz.yaml + datenschutz/body.mdoc
   kontakt.yaml + kontakt/body.mdoc
   site.yaml
+
+public/downloads/  # Documents (PDFs) uploaded through the rich-text editor
 ```
+
+# Rich Text
+
+All body fields use `fields.markdoc` (not the deprecated `fields.document`), sharing
+one `bodyMarkdoc()` helper in `keystatic.config.ts` and the `markdocOptions` from
+`src/keystatic/contentComponents.tsx`. Content components are written with the
+`@keystatic/core/content-components` API:
+
+There is one component: `dokument` — inline, `{% dokument datei="…" titel="…" /%}`
+→ `.doc-link` in the middle of a sentence.
+
+Adding a component means three places: the definition in `contentComponents.tsx`,
+the tag → component name mapping in `src/utils/markdoc.ts`, and the React renderer
+in `src/components/RichText.tsx`.
+
+`dokument` ships its own `NodeView` (Keystar UI dialog) instead of a `ContentView`.
+Keystatic's insert command only inserts the node without selecting it, so its
+built-in edit popover would stay hidden until the editor clicks the node — the
+NodeView renders regardless of selection and opens the dialog itself whenever the
+node has no file yet. The dialog also restricts the picker to PDFs (`fields.file`
+has no type filter) and normalizes the filename itself.
+
+Uploads go to `public/downloads/` (public path `/downloads/`); identical filenames
+overwrite each other.
 
 # Deployment
 

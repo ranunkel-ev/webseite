@@ -5,7 +5,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import RichText from '../../components/RichText';
 import ClickableImage from '../../components/ClickableImage';
 import { buildAktuellesSlugs } from '../../utils/slug';
-import { nodesToPlainText } from '../../utils/plainText';
+import { markdocToPlainText } from '../../utils/plainText';
+import { renderBody } from '../../utils/markdoc';
 
 export async function getStaticPaths() {
   const reader = createReader(process.cwd(), keystaticConfig);
@@ -15,7 +16,9 @@ export async function getStaticPaths() {
 
   return Promise.all(
     items.map(async (item, index) => {
-      const bodyNodes = item.body ? await item.body() : [];
+      // Markdoc hier schon transformieren: der Reader liefert Ast.Node-Instanzen
+      // mit Methoden, die als Props zwischen den Routen nicht überleben.
+      const body = item.body ? await item.body() : null;
       return {
         params: { slug: slugs[index] },
         props: {
@@ -24,16 +27,17 @@ export async function getStaticPaths() {
           title: item.title,
           image: item.image,
           teaser: item.teaser,
-          bodyNodes,
+          content: body ? renderBody(body.node) : null,
+          plainText: markdocToPlainText(body?.node),
         },
       };
     })
   );
 }
 
-const { highlight, date, title, image, teaser, bodyNodes } = Astro.props;
+const { highlight, date, title, image, teaser, content, plainText } = Astro.props;
 // Meta-Description: Kurztext bevorzugt, sonst der Anfang der Langfassung.
-const description = (teaser || nodesToPlainText(bodyNodes)).slice(0, 160);
+const description = (teaser || plainText).slice(0, 160);
 ---
 
 <BaseLayout
@@ -56,7 +60,7 @@ const description = (teaser || nodesToPlainText(bodyNodes)).slice(0, 160);
           {date && <span class="article-date">{date}</span>}
         </div>
         <h1>{title}</h1>
-        <RichText document={bodyNodes} />
+        {content && <RichText content={content} />}
       </div>
     </article>
   </div>

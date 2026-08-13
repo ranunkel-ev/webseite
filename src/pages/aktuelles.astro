@@ -4,7 +4,7 @@ import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ClickableImage from '../components/ClickableImage';
 import { buildAktuellesSlugs } from '../utils/slug';
-import { nodesToPlainText } from '../utils/plainText';
+import { markdocToPlainText } from '../utils/plainText';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const page = await reader.singletons.aktuelles.read();
@@ -17,8 +17,8 @@ const slugs = buildAktuellesSlugs([...rawItems]);
 // Detailseite mit Inhalt gibt.
 const items = await Promise.all(
   rawItems.map(async (item, index) => {
-    const bodyNodes = item.body ? await item.body() : [];
-    const hasDetail = nodesToPlainText(bodyNodes).length > 0;
+    const body = item.body ? await item.body() : null;
+    const hasDetail = markdocToPlainText(body?.node).length > 0;
     return { ...item, hasDetail, slug: slugs[index] };
   })
 );

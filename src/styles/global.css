@@ -1330,14 +1330,22 @@ body {
   color: var(--c-green);
 }
 
-/* ── CALLOUT / HINWEIS ───────────────────────── */
-.callout {
-  border-left: 4px solid var(--c-clay, #b8834a);
-  background: #f7f3ec;
-  padding: 14px 18px;
-  border-radius: 6px;
-  margin: 24px 0;
-  color: #4a4a40;
+/* ── DOKUMENT-LINK ───────────────────────────── */
+/* Inline-Link auf ein hochgeladenes Dokument, mitten im Fließtext. */
+.doc-link {
+  font-family: var(--f-sans);
+  color: var(--c-green);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.doc-link::before {
+  content: '📄';
+  margin-right: 4px;
+  text-decoration: none;
+}
+.doc-link:hover {
+  opacity: 0.75;
 }
 
 /* ── CTA BAR ─────────────────────────────────── */

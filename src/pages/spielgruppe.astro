@@ -3,13 +3,15 @@ import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RichText from '../components/RichText';
+import { renderBody } from '../utils/markdoc';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const page = await reader.singletons.spielgruppe.read();
 
 const hero = page?.hero;
 const infoBox = page?.infoBox ?? [];
-const bodyNodes = page?.body ? await page.body() : [];
+const body = page?.body ? await page.body() : null;
+const content = body ? renderBody(body.node) : null;
 const cta = page?.cta;
 ---
 
@@ -40,7 +42,7 @@ const cta = page?.cta;
     )}
 
     <div class="prose">
-      <RichText document={bodyNodes} />
+      {content && <RichText content={content} />}
     </div>
 
     {cta?.enabled && (

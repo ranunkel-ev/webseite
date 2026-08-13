@@ -1,58 +1,39 @@
-import { DocumentRenderer, type DocumentRendererProps } from '@keystatic/core/renderer';
+import React from 'react';
+import Markdoc, { type RenderableTreeNode } from '@markdoc/markdoc';
 
 /**
- * Frontend-Renderer für Keystatic-Dokumentfelder. Ersetzt den früheren
- * handgeschriebenen docRenderer.ts und rendert zusätzlich die Component-Blocks
- * (CTA, Hinweis) mit ihrem eigenen Styling.
+ * Frontend renderer for Keystatic's Markdoc body fields. The component names
+ * below match the `render` mapping in src/utils/markdoc.ts.
  *
- * Wird in Astro ohne client:-Directive eingebunden und damit serverseitig zu
- * statischem HTML gerendert.
+ * Used in Astro without a client: directive, so it renders to static HTML on
+ * the server.
  */
-const componentBlocks: DocumentRendererProps['componentBlocks'] = {
-  hinweis: (props: { text?: string }) => (
-    <div className="callout">{props.text}</div>
-  ),
-};
+type Children = { children?: React.ReactNode };
 
-/**
- * Tabellen bekommen einen scrollbaren Wrapper, damit breite Tabellen auf dem
- * Handy nicht die Seite aufziehen.
- */
-const renderers: DocumentRendererProps['renderers'] = {
-  block: {
-    table: ({ head, body }) => (
-      <div className="rich-table-wrap">
-        <table>
-          {head && (
-            <thead>
-              <tr>
-                {head.map((cell, i) => (
-                  <th key={i} colSpan={cell.colSpan} rowSpan={cell.rowSpan}>
-                    {cell.children}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-          )}
-          <tbody>
-            {body.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((cell, i) => (
-                  <td key={i} colSpan={cell.colSpan} rowSpan={cell.rowSpan}>
-                    {cell.children}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    ),
-  },
-};
+/** Renders the document root without a wrapper element. */
+const Doc = ({ children }: Children) => <>{children}</>;
 
-export default function RichText({ document }: { document: DocumentRendererProps['document'] }) {
-  return (
-    <DocumentRenderer document={document} componentBlocks={componentBlocks} renderers={renderers} />
-  );
+/** Wide tables scroll inside their own container instead of stretching the page. */
+const Table = ({ children }: Children) => (
+  <div className="rich-table-wrap">
+    <table>{children}</table>
+  </div>
+);
+
+const Dokument = ({ datei, titel }: { datei?: string; titel?: string }) =>
+  datei ? (
+    <a className="doc-link" href={datei} download>
+      {titel || dateiname(datei)}
+    </a>
+  ) : null;
+
+/** "/downloads/anmeldeformular.pdf" → "anmeldeformular.pdf" */
+function dateiname(pfad: string): string {
+  return pfad.slice(pfad.lastIndexOf('/') + 1);
+}
+
+const components = { Doc, Table, Dokument };
+
+export default function RichText({ content }: { content: RenderableTreeNode }) {
+  return <>{Markdoc.renderers.react(content, React, { components })}</>;
 }
