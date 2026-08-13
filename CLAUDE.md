@@ -76,3 +76,15 @@ aborts when `dist/index.html` is missing, excludes `.well-known/`, and offers a
 - `--c-brown: #b8834a` — brown accents
 - `--f-serif: 'Lora'` — serif headings
 - `--f-sans: 'DM Sans'` — body text
+
+# Fonts
+
+Self-hosted, no Google Fonts — no visitor IPs leave the server (GDPR). The
+`@font-face` rules sit at the top of `global.css`, the woff2 files in
+`public/fonts/`. They are the variable fonts from `@fontsource-variable/lora`
+5.3.0 and `@fontsource-variable/dm-sans` 5.3.0 (subsets latin + latin-ext only;
+Lora also italic, DM Sans normal only — its italic is synthesized, as before).
+The packages are not dependencies; to update, install them temporarily, copy the
+files from `node_modules/@fontsource-variable/*/files/` and uninstall again.
+
+The site sets no cookies and loads no third-party resources.
