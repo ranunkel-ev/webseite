@@ -19,7 +19,7 @@
     "@keystatic/astro": "5.1.0",
     "@keystatic/core": "0.5.50",
     "@markdoc/markdoc": "0.4.0",
-    "astro": "6.4.7",
+    "astro": "6.4.8",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "yet-another-react-lightbox": "3.32.0"
