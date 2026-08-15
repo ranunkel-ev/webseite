@@ -22,7 +22,7 @@
     "astro": "6.4.8",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "yet-another-react-lightbox": "3.32.0"
+    "yet-another-react-lightbox": "3.32.2"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
