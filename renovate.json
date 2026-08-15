@@ -11,6 +11,11 @@
       "matchUpdateTypes": ["major"],
       "automerge": false,
       "labels": ["dependencies", "major"]
+    },
+    {
+      "description": "Keystatic still depends on @markdoc/markdoc 0.4.",
+      "matchPackageNames": ["@markdoc/markdoc"],
+      "allowedVersions": "<0.5"
     }
   ]
 }
