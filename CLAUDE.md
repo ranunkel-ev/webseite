@@ -3,7 +3,6 @@
 - Use astro for the design
 - Make content editable by keystatic
 - Use mdoc for rich text fields
-- Update CLAUDE.md if something changes
 
 ## Language
 
@@ -107,7 +106,7 @@ Required repo secrets: `STRATO_SFTP_HOST`, `STRATO_SFTP_USER`,
 
 Because the mirror deletes remote files that are absent locally, the workflow
 aborts when `dist/index.html` is missing, excludes `.well-known/`, and offers a
-`dry_run` input via *Run workflow*.
+`dry_run` input via _Run workflow_.
 
 # Design Tokens (global.css :root)
 
