@@ -38,6 +38,13 @@ jobs:
 
       - run: npm ci
 
+      # `astro build` does not type-check, so a dependency update can leave the
+      # types broken while the build stays green - which is how a direct
+      # @markdoc/markdoc 0.5 slipped past unnoticed. Runs before the build so a
+      # failure costs nothing and never reaches the mirror step.
+      - name: Type-check
+        run: npm run check
+
       # The previous build, used below to decide which files actually changed.
       # The key is unique per run, so only the restore-keys prefix ever hits and
       # always picks the newest cache.
