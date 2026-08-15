@@ -16,6 +16,6 @@ infoBox:
     value: '2006'
 cta:
   enabled: false
-  text: Platz in der Spielgruppe sichern?
+  text: Platz in der Spielgruppe sichern??
   buttonLabel: Jetzt vormerken
   buttonHref: /kontakt
